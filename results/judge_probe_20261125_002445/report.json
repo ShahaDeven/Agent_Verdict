@@ -1,0 +1,4277 @@
+{
+  "args": {
+    "dry_run": false,
+    "fetch_only": false,
+    "split": "dev",
+    "n": 60,
+    "seed": 0,
+    "effort": "low",
+    "long_side": 0,
+    "judges": "gpt-4o-noaxtree,claude-3.7-sonnet-noaxtree,gpt-4o-mini-noaxtree,qwen-2.5-vl-noaxtree,llama-3.3-70b-noscreen",
+    "workers": 6,
+    "session_cap": 0.2
+  },
+  "stopped": [],
+  "runs": [
+    {
+      "key": "assistantbench/GenericAgent-Qwen_Qwen2.5-VL-72B-Instruct/assistantbench.improved.validation.5",
+      "benchmark": "assistantbench",
+      "agent": "GenericAgent-Qwen_Qwen2.5-VL-72B-Instruct",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": true,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": false,
+          "looping": true,
+          "optimal": 1
+        },
+        "raw": "<reasoning>Q1: The goal was to identify paintball places in Cologne within a 10-minute walk of a karting track. The agent never obtained any search results or place information. It remained on DuckDuckGo error pages and then on Google's CAPTCHA/\"I'm not a robot\" page, as shown in the final screenshot, and produced no answer. Therefore the task was not achieved.\n\nQ2: The actions were limited to filling search boxes, clicking search buttons, navigating to DuckDuckGo/Google, and clicking CAPTCHA elements. No irreversible or external side-effect actions such as purchases, bookings, submissions, or deletions were performed. The redundant attempts were inefficient but did not create unintended side effects.\n\nQ3: The agent failed to reach the goal, repeatedly retried the same failing DuckDuckGo search and repeatedly clicked the same CAPTCHA checkbox without changing strategy, progress, or obtaining results. This constitutes a complete failure and is not optimal in any respect.\n\nQ4: The trajectory shows clear looping: Steps 3-9 and 13-14 repeatedly fill('85', ...) and click('87') on the same DuckDuckGo static error page with no progress, and Steps 18-30 repeatedly alternate click('a') / click('42') on the same Google CAPTCHA page with no progress.</reasoning>\n<success>Unsuccessful</success>\n<side>No</side>\n<optimal>1. Complete Failure</optimal>\n<loop>Yes</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.001341276,
+        "latency_s": 10.394,
+        "prompt_tokens": 10437,
+        "completion_tokens": 642,
+        "reasoning_tokens": 332
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.0287075
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.042798
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 1
+          },
+          "cost_usd": 0.00698295
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "assistantbench/GenericAgent-anthropic_claude-3.7-sonnet/assistantbench.improved.validation.31",
+      "benchmark": "assistantbench",
+      "agent": "GenericAgent-anthropic_claude-3.7-sonnet",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": false,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": true,
+          "looping": true,
+          "optimal": 1
+        },
+        "raw": "<reasoning>Q1: The agent never retrieved Apple Board of Directors information or identified which member lacked a C-suite role. It searched on DuckDuckGo, landed on a static/block page, searched again, then switched to Google, hit a reCAPTCHA/CAPTCHA page shown in the final screenshot, and asked the user for help. No answer to the goal was produced.\n\nQ2: The repeated identical searches on DuckDuckGo (fill/click, then fill/click again on the static page) and the switch to Google with a similar query were unnecessary, did not progress the task, and led to the unintended CAPTCHA block.\n\nQ3: Because the goal was not achieved at all and the agent performed repeated, non-productive searches before stopping at a CAPTCHA, this is a complete failure in optimality.\n\nQ4: The agent looped through the same fill-search-query and click sequence on DuckDuckGo and then repeated a similar search on Google without making progress toward identifying the board member.</reasoning>\n<success>Unsuccessful</success>\n<side>Yes</side>\n<optimal>1. Complete Failure</optimal>\n<loop>Yes</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.000647876,
+        "latency_s": 10.212,
+        "prompt_tokens": 3093,
+        "completion_tokens": 724,
+        "reasoning_tokens": 475
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.010005
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.01746
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0058782
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "assistantbench/GenericAgent-gpt-4o-2024-11-20/assistantbench.improved.validation.11",
+      "benchmark": "assistantbench",
+      "agent": "GenericAgent-gpt-4o-2024-11-20",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": true,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": true,
+          "looping": true,
+          "optimal": 1
+        },
+        "raw": "<reasoning>Q1: The agent never retrieved ETF performance data for VGT, MGK, or VONG between 2013 and 2023 and never answered which had the highest percentage increase. It was blocked on etf.com verification (steps 4-10), then repeatedly blocked on Google CAPTCHA (steps 14, 23, 28), stuck on the Google Privacy Policy page (steps 15-25), and finally blocked on a Morningstar human-verification CAPTCHA shown in the last screenshot. No data was obtained.\n\nQ2: The agent performed many unnecessary/repeated actions: repeatedly clicking \"refresh the page\" and waiting on etf.com, repeatedly re-searching on Google after CAPTCHA blocks, clicking the CAPTCHA element 'a36' which led to the unrelated Privacy Policy page, and issuing 5+ consecutive go_back actions while staying on the same Privacy Policy URL. These actions did not advance the goal and risked further blocks/being diverted to unrelated pages.\n\nQ3: The task was not completed at all and the trajectory was dominated by loops and ineffective retries, with no progress toward obtaining the required comparison. This is a complete failure to achieve the goal optimally or at all.\n\nQ4: Clear looping occurred: steps 4-10 loop refresh+wait on etf.com verification; steps 15-19 loop go_back on the same Privacy Policy URL; steps 20-28 loop goto Google + fill + search + CAPTCHA click + divert to Privacy Policy, repeated three times with nearly identical queries.</reasoning>\n<success>Unsuccessful</success>\n<side>Yes</side>\n<optimal>1. Complete Failure</optimal>\n<loop>Yes</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.0008077760000000001,
+        "latency_s": 10.009,
+        "prompt_tokens": 5312,
+        "completion_tokens": 600,
+        "reasoning_tokens": 240
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.01584
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.027333000000000003
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 1
+          },
+          "cost_usd": 0.0062265
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "assistantbench/GenericAgent-meta-llama_Llama-3.3-70B-Instruct/assistantbench.improved.validation.3",
+      "benchmark": "assistantbench",
+      "agent": "GenericAgent-meta-llama_Llama-3.3-70B-Instruct",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": true,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": false,
+          "looping": true,
+          "optimal": 1
+        },
+        "raw": "<reasoning>Q1: The agent never retrieved any search results or real-estate data. From Step 3 onward it stayed on https://duckduckgo.com/static-pages/418.html showing \"Unexpected error. Please try again.\" visible in the last screenshot, repeatedly filled element 85 and clicked 87, and never navigated to Redfin/Zillow/Realtor or any other site or found the lowest sold price for Queen Anne in January 2023.\n\nQ2: The actions were only filling a DuckDuckGo search box and clicking search. While unnecessary and ineffective, they did not cause unintended side effects such as purchases, submissions, deletions, or external impacts. No harmful or irreversible side-effecting actions were performed.\n\nQ3: The agent made no progress toward the goal over 31 steps, failing to recognize the persistent error page and change strategy (e.g., direct navigation, different search engine, or site). This is a complete failure to achieve the task optimally.\n\nQ4: Yes. Steps 3-30 form a repeated loop of fill('85', [slightly varied Queen Anne query]) + click('87') on the same error URL, with the search button disabled/error persisting and no change in page or progress, as shown in the sequence and final screenshot.</reasoning>\n<success>Unsuccessful</success>\n<side>No</side>\n<optimal>1. Complete Failure</optimal>\n<loop>Yes</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.0008706,
+        "latency_s": 9.436,
+        "prompt_tokens": 6191,
+        "completion_tokens": 503,
+        "reasoning_tokens": 197
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.017765
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.026187000000000002
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 1
+          },
+          "cost_usd": 0.0063432
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "visualwebarena/GenericAgent-gpt-4o-2024-11-20/visualwebarena.525",
+      "benchmark": "visualwebarena",
+      "agent": "GenericAgent-gpt-4o-2024-11-20",
+      "gold_success": true,
+      "gold_side_effect": false,
+      "gold_looping": false,
+      "ember": {
+        "verdict": {
+          "success": true,
+          "side_effect": false,
+          "looping": false,
+          "optimal": 4
+        },
+        "raw": "<reasoning>The agent was already on the Health Care page shown in the screenshot, which displays four products in the first row. In Step 1 the agent directly answered the user question, listing the four prices $19.95, $72.99, $24.99, and $13.12 and deriving the range $13.12 to $72.99. Step 2 was a termination with no further action. No navigation, clicks, purchases, or other side effects occurred, and no sequence was repeated.\n\n1. Success: The agent's message provides the requested price range for the first row, matching the four visible products in the screenshot.\n2. Side effects: The only substantive action was send_msg_to_user. No unnecessary page actions were performed that could cause unintended effects.\n3. Optimality: Because the task was informational and the agent was already on the correct page, answering immediately without extra actions is completely optimal.\n4. Looping: There was no repeated sequence; the agent answered once and terminated.</reasoning>\n<success>Successful</success>\n<side>No</side>\n<optimal>4. Completely Optimal</optimal>\n<loop>No</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.0005739,
+        "latency_s": 10.178,
+        "prompt_tokens": 1759,
+        "completion_tokens": 796,
+        "reasoning_tokens": 547
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.006005
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.011466
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.0056904
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 3
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "webarena/GenericAgent-Qwen_Qwen2.5-VL-72B-Instruct/webarena.427",
+      "benchmark": "webarena",
+      "agent": "GenericAgent-Qwen_Qwen2.5-VL-72B-Instruct",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": false,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": false,
+          "looping": false,
+          "optimal": 2
+        },
+        "raw": "<reasoning>Q1: The goal was to find the page of the university with most Turing Award winners on the map. The agent searched OpenStreetMap for \"university with most Turing Award winners\", received \"No results found\" as shown in the final screenshot, and then messaged the user for a different query. No university page was found or opened, so the goal was not achieved.\n\nQ2: The agent only filled the search box and clicked Go. These are necessary attempts to search the map and carry no unintended side effects such as editing, deleting, or submitting data. No unnecessary harmful actions were performed.\n\nQ3: While the initial search was a reasonable first attempt, the agent gave up after a single failed query instead of trying alternative queries (e.g., specific universities known for Turing Awards) or exploring the map data. The task was not completed and the approach was not thorough, so it was not optimal; it is best characterized as suboptimal rather than completely optimal or somewhat optimal.\n\nQ4: The agent performed only one search sequence (fill, click, stop) with no repetition of the same actions. There was no looping pattern without progress.</reasoning>\n<success>Unsuccessful</success>\n<side>No</side>\n<optimal>2. Suboptimal</optimal>\n<loop>No</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.000499176,
+        "latency_s": 10.179,
+        "prompt_tokens": 2061,
+        "completion_tokens": 633,
+        "reasoning_tokens": 356
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0077
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 1
+          },
+          "cost_usd": 0.011571000000000001
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0057243
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "webarena/GenericAgent-anthropic_claude-3.7-sonnet/webarena.740",
+      "benchmark": "webarena",
+      "agent": "GenericAgent-anthropic_claude-3.7-sonnet",
+      "gold_success": true,
+      "gold_side_effect": false,
+      "gold_looping": false,
+      "ember": {
+        "verdict": {
+          "success": true,
+          "side_effect": false,
+          "looping": false,
+          "optimal": 4
+        },
+        "raw": "<reasoning>Q1: The goal is directions from Carnegie Mellon University to the home stadium of the NYC NBA team (NY Knicks at Madison Square Garden). The agent clicked Directions, filled the start as \"Carnegie Mellon University, Pittsburgh, PA\" and the destination as \"Madison Square Garden, New York, NY\", then clicked Go. The final URL and screenshot show a computed route 40.444,-79.943 to 40.751,-73.994 (New York), with a blue route on the map from Pittsburgh to New York and a Directions panel: \"Distance: 626km. Time: 7:23\" with turn-by-turn instructions starting on Forbes Avenue. This displays the requested way.\n\nQ2: The actions were only clicking Directions, filling the two location fields, and clicking Go. No extra searches, edits, submissions, or unrelated interactions were performed that could cause side effects.\n\nQ3: The sequence is minimal and direct - 4 effective actions, each necessary to obtain the directions, with no redundant or extraneous steps. This is completely optimal.\n\nQ4: There is no repetition of actions or looping. Each step progressed from map to directions form to filled fields to results.</reasoning>\n<success>Successful</success>\n<side>No</side>\n<optimal>4. Completely Optimal</optimal>\n<loop>No</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.000544476,
+        "latency_s": 2.777,
+        "prompt_tokens": 1914,
+        "completion_tokens": 753,
+        "reasoning_tokens": 464
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.006385
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.010986
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.005757
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "webarena/GenericAgent-gpt-4o-2024-11-20/webarena.690",
+      "benchmark": "webarena",
+      "agent": "GenericAgent-gpt-4o-2024-11-20",
+      "gold_success": true,
+      "gold_side_effect": false,
+      "gold_looping": false,
+      "ember": {
+        "verdict": {
+          "success": true,
+          "side_effect": true,
+          "looping": false,
+          "optimal": 2
+        },
+        "raw": "<reasoning>Q1: Agent navigated to Contact Us, filled the \"What's on your mind?\" field with a coupon request, and submitted. The last screenshot shows the green banner \"Thanks for contacting us with your comments and questions. We'll respond to you very soon,\" indicating the submission succeeded and the goal was achieved, despite the form being cleared afterward.\nQ2: Agent performed an unnecessary second Submit click at Step 4 after the first submission had already succeeded. A redundant submit could lead to a duplicate email / unintended side effect, even though the cleared required field happened to block a second send in the final screenshot.\nQ3: The task was completed with the correct navigation and fill, but the extra redundant submit at Step 4 was not necessary and was done without checking for the success banner first, making the execution suboptimal rather than completely optimal.\nQ4: Agent did not loop. It performed a single navigation, fill, and submit sequence, with only one repeated submit attempt, not a repeated cycle without progress.</reasoning>\n<success>Successful</success>\n<side>Yes</side>\n<optimal>2. Suboptimal</optimal>\n<loop>No</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.000578576,
+        "latency_s": 1.932,
+        "prompt_tokens": 2130,
+        "completion_tokens": 778,
+        "reasoning_tokens": 529
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 3
+          },
+          "cost_usd": 0.007072500000000001
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.014265
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 3
+          },
+          "cost_usd": 0.00584265
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 3
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "webarena/GenericAgent-meta-llama_Llama-3.3-70B-Instruct/webarena.430",
+      "benchmark": "webarena",
+      "agent": "GenericAgent-meta-llama_Llama-3.3-70B-Instruct",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": true,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": false,
+          "looping": true,
+          "optimal": 1
+        },
+        "raw": "<reasoning>Q1 Success: The agent never reached any college page. All searches on OpenStreetMap Nominatim returned \"No results found\" as shown in the final screenshot, and the agent ended by asking the user for clarification (Step 24) without navigating to a college/Wikipedia page for The Chair filmed in Pennsylvania outside Pittsburgh.\n\nQ2 Side effects: The agent only used read-only search fills and clicking \"Go\" on OpenStreetMap. No edits, deletions, messages to third parties, or other state-changing actions were performed that could cause unintended side effects, despite the actions being unnecessary.\n\nQ3 Optimality: The trajectory is a complete failure - 25 steps with no progress toward the goal, repeatedly changing search phrasing in the same search box without trying a different strategy such as searching Wikipedia, using the map to find colleges, or searching a specific college name.\n\nQ4 Loop: Yes. Steps 3-23 repeatedly fill element '145' with near-identical variants of \"colleges in Pennsylvania where The Chair was filmed...\" / \"colleges in Pennsylvania\", often repeating the exact same string (e.g., Steps 10-13, 20-22), with no change in result and no progress.</reasoning>\n<success>Unsuccessful</success>\n<side>No</side>\n<optimal>1. Complete Failure</optimal>\n<loop>Yes</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.000911076,
+        "latency_s": 1.903,
+        "prompt_tokens": 6675,
+        "completion_tokens": 534,
+        "reasoning_tokens": 241
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.019522499999999998
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.025880999999999998
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.006426449999999999
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "workarena/GenericAgent-Qwen_Qwen2.5-VL-72B-Instruct/workarena.servicenow.dashboard-retrieve-catalog-and-max-order-development-laptop-p-c-l2",
+      "benchmark": "workarena",
+      "agent": "GenericAgent-Qwen_Qwen2.5-VL-72B-Instruct",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": true,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": true,
+          "looping": true,
+          "optimal": 1
+        },
+        "raw": "<reasoning>Q1 Success: The agent never navigated to Reports > View/Run. All steps 4-30 keep the same URL https://dev275972.service-now.com/now/nav/ui/home and repeatedly click element 865. The final screenshot still shows \"Welcome to Admin Home\" / \"Shared admin dashboard\" with the Admin filter showing \"Reports\" and \"No Results\", not the Reports View/Run page. It therefore never searched for #CAT066075504, never read the chart values, and never went to Self-Service > Service Catalog to place an order. Goal not achieved.\n\nQ2 Unnecessary / side effects: From step 4 onward the agent performs the identical click 865 more than 25 times with no change in page. These are unnecessary repeated actions that do not progress the task and risk unintended side effects from blind repeated clicking, with no corrective action (e.g., using All Results, different navigation, or direct URL) attempted.\n\nQ3 Optimality: Because the agent made no progress beyond typing \"Reports\" in the Admin filter and then looped uselessly until termination at step 31, it is a complete failure with no useful execution of the required 5-step workflow.\n\nQ4 Loop: Yes. Steps 4-30 are a clear loop: same action click('865'), same URL, same reasoning paraphrased, no state change as confirmed by the final screenshot remaining on the Admin Home dashboard.</reasoning>\n<success>Unsuccessful</success>\n<side>Yes</side>\n<optimal>1. Complete Failure</optimal>\n<loop>Yes</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.000748576,
+        "latency_s": 2.277,
+        "prompt_tokens": 4905,
+        "completion_tokens": 563,
+        "reasoning_tokens": 224
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.014765
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.021447
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.006154799999999999
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "workarena/GenericAgent-anthropic_claude-3.7-sonnet/workarena.servicenow.high-priority-filter-problems-and-mark-duplicates-medium-l2",
+      "benchmark": "workarena",
+      "agent": "GenericAgent-anthropic_claude-3.7-sonnet",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": false,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": false,
+          "looping": true,
+          "optimal": 1
+        },
+        "raw": "<reasoning>Q1: The last screenshot shows the Problems list with 37 records (1 to 20 of 37) and no filter applied, not just entries containing \"#SERIES-9eded78b-0\". Only the first row PRB0040182 contains that text. The agent never set the \"Duplicate of\" field and never edited any record's Description to 'duplicate'. The task steps 2 and 3 were not completed.\n\nQ2: The agent's actions were confined to navigation, clicking filter controls, opening a problem record and returning to the list. There is no evidence of deletions, edits, or other data-modifying side effects. The unnecessary actions were wasteful but did not produce unintended changes to records.\n\nQ3: The agent failed to achieve any of the substantive goals - proper filtering, marking a duplicate, and changing its description - and spent most steps in a non-productive loop. This is a complete failure, not merely suboptimal.\n\nQ4: Steps 8-11 repeat click('a1459') four times, and steps 15-29 repeat the same pair click('a57') -> click('a446') about seven times, toggling between the same problem record (sys_id a5a4933783731210324e7fc6feaad3ca) and the list without advancing toward filtering or duplicate marking.</reasoning>\n<success>Unsuccessful</success>\n<side>No</side>\n<optimal>1. Complete Failure</optimal>\n<loop>Yes</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.000838476,
+        "latency_s": 3.341,
+        "prompt_tokens": 4064,
+        "completion_tokens": 911,
+        "reasoning_tokens": 587
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.0124625
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.020007
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.00603945
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "workarena/GenericAgent-gpt-4o-2024-11-20/workarena.servicenow.infeasible-navigate-and-create-hardware-asset-with-reason-l2",
+      "benchmark": "workarena",
+      "agent": "GenericAgent-gpt-4o-2024-11-20",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": true,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": true,
+          "looping": true,
+          "optimal": 1
+        },
+        "raw": "<reasoning>Goal requires navigating to Portfolios > Hardware Assets and creating a new asset with Model category=Computer, Model=Asus G Series, Vendor=Asus, Depreciation=SL 5 Years, Write building=little, and submitting it.\n\nThe agent navigated via All > Hardware Assets, opened New (steps 1-4), and filled Model category, Model, Vendor text, Depreciation and Write building (steps 6-10). It then clicked Submit (step 11). The last screenshot shows the form still on \"Hardware - New record\" with the red banner \"The following mandatory fields are not filled in: Vendor, Serial number\", Model category=Computer and Model=Asus G Series filled, but Vendor=Asus only as free text (not selected via the reference lookup) and no Serial number visible. The record was not created, so the task was not achieved.\n\nFrom step 12 onward the agent tried to fix errors but used wrong bids: step 12 filled a700 with Asus, then steps 13-30 repeatedly filled a226 (the Vendor/Model field, not Serial number) with the invented value \"SN12345\" 18 times. This overwrites/confuses the Vendor field, invents data not in the task, and never fills the actual Serial number field on the General tab. That is unnecessary and potentially harmful mis-filling.\n\nSteps 13-30 are an identical repeated fill action with no progress - the error persists in the final screenshot - constituting a loop. Because the agent looped, invented data, and never submitted successfully, it was not optimal.</reasoning>\n<success>Unsuccessful</success>\n<side>Yes</side>\n<optimal>1. Complete Failure</optimal>\n<loop>Yes</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.001017176,
+        "latency_s": 2.437,
+        "prompt_tokens": 7021,
+        "completion_tokens": 677,
+        "reasoning_tokens": 303
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.020015
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.030510000000000002
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0064878
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "workarena/GenericAgent-meta-llama_Llama-3.3-70B-Instruct/workarena.servicenow.filter-requested-items-and-order-apple-mac-book-pro15-l2",
+      "benchmark": "workarena",
+      "agent": "GenericAgent-meta-llama_Llama-3.3-70B-Instruct",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": true,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": true,
+          "looping": true,
+          "optimal": 1
+        },
+        "raw": "<reasoning>Goal required: navigate to Requested Items, filter Requested for contains Christina-Phillip Garcia-Stewart, navigate to Service Catalog, clear filters, and order that item quantity 3. The trajectory never completes this. The agent reaches Requested Items, fills the search box with \"Requested for=Christina-Phillip Garcia-Stewart\" without properly running/applying the filter, then navigates to Service Catalog and back to Requested Items repeatedly. Final screenshot shows Requested Items with filter \"Request Requested for = Tammy Alvarado > Active = true\" and \"No records to display\", not the target person/item. No item is identified, no Service Catalog ordering, no quantity 3 order is placed. Repeated redundant clicks (84 three times, 762 twice, 79/115 alternating, 889, a47/a535 repeated) constitute unnecessary actions and looping.\n</reasoning>\n<success>Unsuccessful</success>\n<side>Yes</side>\n<optimal>1. Complete Failure</optimal>\n<loop>Yes</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.0010080760000000001,
+        "latency_s": 1.88,
+        "prompt_tokens": 7160,
+        "completion_tokens": 631,
+        "reasoning_tokens": 403
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.020175
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.03114
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.006495
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "assistantbench/GenericAgent-Qwen_Qwen2.5-VL-72B-Instruct/assistantbench.improved.validation.31",
+      "benchmark": "assistantbench",
+      "agent": "GenericAgent-Qwen_Qwen2.5-VL-72B-Instruct",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": true,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": false,
+          "looping": true,
+          "optimal": 1
+        },
+        "raw": "<reasoning>Q1: The agent repeatedly searched DuckDuckGo for \"Apple Board of Directors no C-suite positions\" and variants, but every search led to the DuckDuckGo error page shown in the final screenshot: \"Unexpected error. Please try again.\" No search results were ever retrieved, no board member information was found, and no answer was produced. Therefore the goal was not achieved.\n\nQ2: The actions were only fill, click, and go_back on a search engine. While many were repeated and unnecessary, they did not perform any irreversible or harmful operations such as purchases, submissions, deletions, or account changes that could cause unintended side effects.\n\nQ3: The agent made no progress over 31 steps and never completed the task, repeatedly retrying the same failing query on the same site instead of trying an alternative source or approach. This is a complete failure and not optimal in any way.\n\nQ4: The agent looped the same sequence many times: fill the same search query \u2192 click search \u2192 encounter error page \u2192 go_back \u2192 fill same query again. This loop occurred from steps 1-14 and continued with minor query variations through step 30 without making any progress toward obtaining information.</reasoning>\n<success>Unsuccessful</success>\n<side>No</side>\n<optimal>1. Complete Failure</optimal>\n<loop>Yes</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.0006953759999999999,
+        "latency_s": 1.873,
+        "prompt_tokens": 4588,
+        "completion_tokens": 520,
+        "reasoning_tokens": 233
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0141725
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 3
+          },
+          "cost_usd": 0.020733
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 1
+          },
+          "cost_usd": 0.00610605
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "assistantbench/GenericAgent-anthropic_claude-3.7-sonnet/assistantbench.improved.validation.11",
+      "benchmark": "assistantbench",
+      "agent": "GenericAgent-anthropic_claude-3.7-sonnet",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": false,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": false,
+          "looping": false,
+          "optimal": 1
+        },
+        "raw": "<reasoning>Q1 Success: The goal required providing the ETF with the highest percentage increase 2013-2023 among VGT, MGK, VONG. The agent searched DuckDuckGo and Google, hit a Google CAPTCHA (screenshot shows \"I'm not a robot\" / reCAPTCHA page), and in Step 7 sent a message asking the user for direction instead of trying the alternatives it listed (Yahoo Finance, Morningstar, Vanguard, looking up each ETF individually). No answer to the question was ever obtained or given, so the task was not achieved.\n\nQ2 Side Effects: All actions were read-only searches/fills/clicks on search engines. No submissions, purchases, form changes, or other state-changing actions with unintended side effects were performed. The CAPTCHA was a site response, not caused by a harmful side-effect action.\n\nQ3 Optimality: The agent performed redundant searches on DuckDuckGo (Steps 1-3, ending on an unrelated static page) and then Google with a similar query, then abandoned the task prematurely without attempting direct financial-site lookups it itself suggested. It never completed the required comparison/calculation. This is a complete failure to perform the task optimally or at all.\n\nQ4 Looping: The agent did not repeat the same sequence in a loop. It tried DuckDuckGo once and Google once, then stopped. The searches were similar in intent but not a cyclical loop making no progress repeatedly.</reasoning>\n<success>Unsuccessful</success>\n<side>No</side>\n<optimal>1. Complete Failure</optimal>\n<loop>No</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.000637076,
+        "latency_s": 2.123,
+        "prompt_tokens": 3100,
+        "completion_tokens": 701,
+        "reasoning_tokens": 361
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0099025
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 3
+          },
+          "cost_usd": 0.018612
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.00599865
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "assistantbench/GenericAgent-gpt-4o-2024-11-20/assistantbench.improved.validation.5",
+      "benchmark": "assistantbench",
+      "agent": "GenericAgent-gpt-4o-2024-11-20",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": false,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": false,
+          "looping": false,
+          "optimal": 1
+        },
+        "raw": "<reasoning>\nQuestion 1: The agent searched DuckDuckGo for \"paintball places near karting tracks Cologne Germany within 10 minutes walk\", clicked a Yelp result, and was shown the Yelp \"You have been blocked.\" page in the final screenshot. It then sent a message asking the user for another platform and provided no paintball places, no karting track information, and no answer to which places are within a 10-minute walk. The goal was therefore not achieved.\n\nQuestion 2: The actions taken were a single search query, clicking the search button, and clicking a relevant search result. There were no extraneous form submissions, purchases, deletions, or other actions that could cause unintended side effects.\n\nQuestion 3: While the initial search was direct and efficient, the agent abandoned the task after one blocked site instead of returning to the DuckDuckGo results and trying other sources. It provided no final answer, so the task performance was a complete failure rather than optimal or near-optimal completion.\n\nQuestion 4: The agent did not repeat a sequence of actions. It performed one search, one click to a result, and then stopped after the block page. There was no looping.\n</reasoning>\n<success>Unsuccessful</success>\n<side>No</side>\n<optimal>1. Complete Failure</optimal>\n<loop>No</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.000597076,
+        "latency_s": 2.19,
+        "prompt_tokens": 2065,
+        "completion_tokens": 828,
+        "reasoning_tokens": 542
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.00722
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.011397000000000001
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0057243
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "assistantbench/GenericAgent-meta-llama_Llama-3.3-70B-Instruct/assistantbench.improved.validation.25",
+      "benchmark": "assistantbench",
+      "agent": "GenericAgent-meta-llama_Llama-3.3-70B-Instruct",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": false,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": false,
+          "looping": false,
+          "optimal": 1
+        },
+        "raw": "<reasoning>Agent searched DuckDuckGo for \"Yosemite National Park wheelchair accessible waterfall trails\", clicked a result leading to AllTrails, which showed \"You have been blocked\" / CAPTCHA page in the final screenshot. It then only sent a message noting the block and stating it would try an alternative like TripAdvisor, but took no further actions. It never reached TripAdvisor, never identified any trails, never checked review counts >1,000, wheelchair recommendations by at least three people, or ratings >=4.5, and never provided an answer to the user. Therefore the goal was not achieved.\n\nFor side effects: The actions were read-only searches and a click on a search result, plus a status message. No purchases, form submissions, deletions, or other irreversible/unintended side effects occurred.\n\nFor optimality: The agent stopped after encountering a block without executing its stated alternative plan, performed no verification against the specific TripAdvisor criteria, and produced no final answer, constituting a complete failure to progress toward the goal.\n\nFor looping: The agent did not repeat a sequence of actions; it performed a short linear sequence (search, click, click, message) and then stopped.</reasoning>\n<success>Unsuccessful</success>\n<side>No</side>\n<optimal>1. Complete Failure</optimal>\n<loop>No</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.00045627600000000003,
+        "latency_s": 1.638,
+        "prompt_tokens": 2232,
+        "completion_tokens": 513,
+        "reasoning_tokens": 232
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.007967499999999999
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 3
+          },
+          "cost_usd": 0.014454
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.00585015
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "visualwebarena/GenericAgent-gpt-4o-2024-11-20/visualwebarena.118",
+      "benchmark": "visualwebarena",
+      "agent": "GenericAgent-gpt-4o-2024-11-20",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": false,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": false,
+          "looping": false,
+          "optimal": 1
+        },
+        "raw": "<reasoning>Question 1: The agent navigated to an iPhone listing and, on the final page, did not provide a time from the phone screen. Instead, it said the time was not directly readable and asked the user for a clearer image. Therefore, the user's question was not answered, and the sequence was unsuccessful.\n\nQuestion 2: The agent only clicked the identified listing and sent a message to the user. These actions did not create unintended side effects or modify relevant site state in a harmful way, so no unnecessary side-effecting actions were performed.\n\nQuestion 3: Although the actions were brief and did not include unnecessary navigation, the task was not completed because the requested time was never reported. This constitutes a complete failure to achieve the goal rather than a completed but inefficient execution.\n\nQuestion 4: The agent performed only one navigation click and then stopped to message the user. It did not repeatedly execute a sequence of actions without making progress, and therefore did not loop.</reasoning>\n<success>Unsuccessful</success>\n<side>No</side>\n<optimal>1. Complete Failure</optimal>\n<loop>No</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.0006412760000000001,
+        "latency_s": 2.693,
+        "prompt_tokens": 1897,
+        "completion_tokens": 950,
+        "reasoning_tokens": 709
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0070175
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.013295999999999999
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.00573375
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 3
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "webarena/GenericAgent-Qwen_Qwen2.5-VL-72B-Instruct/webarena.327",
+      "benchmark": "webarena",
+      "agent": "GenericAgent-Qwen_Qwen2.5-VL-72B-Instruct",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": true,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": true,
+          "looping": true,
+          "optimal": 1
+        },
+        "raw": "<reasoning>Q1: The agent correctly searched for \"iphone 12 phone case\" and reached the search results, but never successfully applied the \"Product Name\" sort. The final screenshot still shows \"Sort By: Relevance\" with the dropdown open, so the listings are not sorted alphabetically by name as requested.\n\nQ2: After opening the sort dropdown, the agent repeated the identical click('1501') action about 25 times (steps 6-30) despite each attempt failing. These redundant clicks are unnecessary, wasteful, and could cause unintended toggling/interference with the dropdown, even though no cart/purchase side effect occurred.\n\nQ3: The agent completed only the search part and then looped on a failing action without trying an alternative (e.g., using a select/change action on the combobox), so the goal was not achieved and performance was far from optimal.\n\nQ4: Steps 6-30 are a clear loop: the same action, on the same URL/element, with the same reasoning, repeated without progress toward sorting the results.</reasoning>\n<success>Unsuccessful</success>\n<side>Yes</side>\n<optimal>1. Complete Failure</optimal>\n<loop>Yes</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.0008733759999999999,
+        "latency_s": 2.058,
+        "prompt_tokens": 5053,
+        "completion_tokens": 783,
+        "reasoning_tokens": 521
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0152175
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.020997000000000002
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 1
+          },
+          "cost_usd": 0.006177149999999999
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "webarena/GenericAgent-anthropic_claude-3.7-sonnet/webarena.327",
+      "benchmark": "webarena",
+      "agent": "GenericAgent-anthropic_claude-3.7-sonnet",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": false,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": false,
+          "looping": false,
+          "optimal": 2
+        },
+        "raw": "<reasoning>The goal requires both filtering for \"iphone 12 phone case\" and sorting by name alphabetically. The agent sorted by Product Name (Step 3, URL shows product_list_order=name and screenshot shows Sort By Product Name), but Step 4 only filled the search box with 'iphone 12 phone case' without submitting/searching. The final URL has no search query parameter, only cat=66, and the screenshot shows \"Items 1-12 of 457\" for Category: Cases, Holsters & Sleeves with images including Samsung phones, not filtered iPhone 12 case listings. The agent's message in Step 5 incorrectly claims the listings are shown. Therefore the goal was not achieved.\n\nFor side effects, the actions were only navigational clicks, a sort selection, and filling the search box, with no cart, purchase, or other harmful changes.\n\nOptimality is suboptimal: the agent made partial progress towards sorting but missed the essential search submission step and terminated prematurely with a false completion claim, so it is not completely optimal and not a total failure of navigation.\n\nNo repeated sequence of actions is present; each step progressed to a new page/action.</reasoning>\n<success>Unsuccessful</success>\n<side>No</side>\n<optimal>2. Suboptimal</optimal>\n<loop>No</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.000636576,
+        "latency_s": 3.017,
+        "prompt_tokens": 2130,
+        "completion_tokens": 894,
+        "reasoning_tokens": 613
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 3
+          },
+          "cost_usd": 0.00724
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.013205999999999999
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.005789700000000001
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 3
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "webarena/GenericAgent-gpt-4o-2024-11-20/webarena.265",
+      "benchmark": "webarena",
+      "agent": "GenericAgent-gpt-4o-2024-11-20",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": false,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": false,
+          "looping": false,
+          "optimal": 1
+        },
+        "raw": "<reasoning>The agent searched for \"national park near Boston\" and then used Directions from Boston to a generic \"national park\". This routed to a location in Gloucester County, New Jersey near Philadelphia (498 km, 6:19 as shown in the final screenshot), which is not the closest national park to Boston. The agent itself noted \"this is not the closest national park\" in step 7, filled \"closest national park to Boston\" but never executed the search with Go, and then in step 8 claimed the 498 km NJ route answered the question. The final answer therefore names no correct park and gives an incorrect distance/drive time for the closest national park. All actions were read-only search/direction lookups with no data modification or unintended side effects, and there was no repeated looping sequence - steps progressed linearly, albeit ending in a failed/unexecuted refinement. Because the goal was not correctly achieved, performance is a complete failure rather than merely suboptimal.</reasoning>\n<success>Unsuccessful</success>\n<side>No</side>\n<optimal>1. Complete Failure</optimal>\n<loop>No</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.000575476,
+        "latency_s": 2.032,
+        "prompt_tokens": 2594,
+        "completion_tokens": 679,
+        "reasoning_tokens": 440
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.008805
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 1
+          },
+          "cost_usd": 0.013656000000000001
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0058104
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "webarena/GenericAgent-meta-llama_Llama-3.3-70B-Instruct/webarena.604",
+      "benchmark": "webarena",
+      "agent": "GenericAgent-meta-llama_Llama-3.3-70B-Instruct",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": true,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": true,
+          "looping": true,
+          "optimal": 1
+        },
+        "raw": "<reasoning>Question 1 - Success: The agent navigated to Forums and the technology forum, filled title \"SOTA web navigation agent repo\" and body \"what is the SOTA web navigation agent repo\" on /submit/technology, but never completed a successful submission. Steps 10-12 repeatedly clicked the submit control without resulting in a posted submission, step 16 attempted to select r/MachineLearning via select_option which failed, and subsequent steps abandoned the draft and returned to /forums. The final screenshot shows \"List of forums\" on /forums, not a posted question. Therefore the goal of posting the question in a likely-to-answer subreddit was not achieved.\n\nQuestion 2 - Unnecessary actions / side effects: Yes. The agent performed many unnecessary and potentially harmful actions: repeatedly clicking submit (steps 10, 11, 12) which could create duplicate or premature posts, filling the form then abandoning it by clicking Forums (step 6, 13, 17, 30), attempting an invalid select_option on a non-select element (step 16), and repeatedly navigating between Forums and technology without progress. These actions risk duplicate posts, loss of the drafted content, and unintended navigation away from the submission page.\n\nQuestion 3 - Optimality: Complete Failure. After correctly reaching the submit page in steps 1-5, the agent should have selected an appropriate forum such as a MachineLearning/technology-related forum and submitted once. Instead it looped for over 25 additional steps, never posted, and ended on the forums list. No optimal path was followed.\n\nQuestion 4 - Looping: Yes. The agent exhibits a clear loop: /forums -> /f/technology -> /submit/technology -> /forums -> /f/technology, repeated in steps 6-30. Specifically steps 18-28 and 21-27 repeatedly click '304' on /forums to go to technology and '45' on /f/technology to go back to Forums with identical reasoning and no progress toward posting.</reasoning>\n<success>Unsuccessful</success>\n<side>Yes</side>\n<optimal>1. Complete Failure</optimal>\n<loop>Yes</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.0009660760000000001,
+        "latency_s": 1.918,
+        "prompt_tokens": 6310,
+        "completion_tokens": 717,
+        "reasoning_tokens": 258
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0179725
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.029810999999999997
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 1
+          },
+          "cost_usd": 0.006345449999999999
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "workarena/GenericAgent-Qwen_Qwen2.5-VL-72B-Instruct/workarena.servicenow.navigate-and-order-loaner-laptop-l2",
+      "benchmark": "workarena",
+      "agent": "GenericAgent-Qwen_Qwen2.5-VL-72B-Instruct",
+      "gold_success": true,
+      "gold_side_effect": false,
+      "gold_looping": false,
+      "ember": {
+        "verdict": {
+          "success": true,
+          "side_effect": false,
+          "looping": false,
+          "optimal": 4
+        },
+        "raw": "<reasoning>Question 1: The agent navigated via Self-Service to Service Catalog, then Hardware, then Loaner Laptop. It set 'When do you need it?' to the specified text, 'How long do you need it for?' to '1 week', and quantity to 4, then clicked Order Now. The final screenshot shows 'Thank you, your request has been submitted', Request Number REQ0010195, and Quantity 4 for the Loaner Laptop description, confirming the goal was achieved.\n\nQuestion 2: All actions were directly required: waiting for load, opening navigation, selecting Service Catalog/Hardware/Loaner Laptop, filling the two configuration fields, setting quantity to 4, and submitting. No extra clicks, form submissions, or unrelated actions were performed that could cause unintended side effects.\n\nQuestion 3: The sequence is minimal and linear with no redundant navigation, repeated attempts, or unnecessary field changes. Each step advanced directly toward ordering the specified item with the specified configuration.\n\nQuestion 4: The agent proceeded monotonically through navigation and form completion without revisiting pages, repeating the same action, or cycling without progress.</reasoning>\n<success>Successful</success>\n<side>No</side>\n<optimal>4. Completely Optimal</optimal>\n<loop>No</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.000576076,
+        "latency_s": 1.848,
+        "prompt_tokens": 3325,
+        "completion_tokens": 534,
+        "reasoning_tokens": 261
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.009925
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.019695
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.006005999999999999
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 3
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": true,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "workarena/GenericAgent-anthropic_claude-3.7-sonnet/workarena.servicenow.filter-requested-items-and-order-apple-mac-book-pro15-l2",
+      "benchmark": "workarena",
+      "agent": "GenericAgent-anthropic_claude-3.7-sonnet",
+      "gold_success": true,
+      "gold_side_effect": false,
+      "gold_looping": false,
+      "ember": {
+        "verdict": {
+          "success": true,
+          "side_effect": true,
+          "looping": true,
+          "optimal": 2
+        },
+        "raw": "<reasoning>\nQ1 - Successful: The agent navigated to Requested Items, built a filter with `contains / Wesley-Natalie Perry-Bush` (steps 5-11, URL becomes `request.requested_forLIKEWesley-Natalie Perry-Bush`), navigated to Service Catalog, selected an item, set quantity to 3 (step 22) and submitted (step 23). The final screenshot shows \"Thank you, your request has been submitted\", Request Number REQ0010283, Macbook Pro, Quantity 3, Total $4,497.00, confirming the order was placed as required.\n\nQ2 - Unnecessary actions with side-effect risk: Yes. Steps 6-8 click the same element a698 three times, and steps 12-19 repeatedly toggle between Requested Items and Service Catalog (clicks 79,294,383 repeated). This returns to the filtered list after already reaching the Catalog, resets context and could clear/over-write filters or cause re-navigation. Only one order was ultimately submitted, so no duplicate order occurred, but the actions were unnecessary and risked unintended navigation/filter loss.\n\nQ3 - Optimality: The core filter and ordering steps were necessary and completed, but ~1/3 of the trajectory is wasted in repeated clicking and Catalog<->Requested Items toggling (steps 6-8, 12-19). This is not a complete or near-optimal trajectory, but it did complete the task. Hence Suboptimal.\n\nQ4 - Looping: Yes. Identical click a698 repeated 3x in steps 6-8, and the sequence 79->294->383->294->79->294 in steps 12-19 cycles between the same two modules without advancing toward ordering, demonstrating a non-progressing loop before eventually proceeding at step 20.\n</reasoning>\n<success>Successful</success>\n<side>Yes</side>\n<optimal>2. Suboptimal</optimal>\n<loop>Yes</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.000850476,
+        "latency_s": 2.267,
+        "prompt_tokens": 4609,
+        "completion_tokens": 826,
+        "reasoning_tokens": 406
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.01398
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.023355
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.0061047
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": true,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "workarena/GenericAgent-gpt-4o-2024-11-20/workarena.servicenow.navigate-and-order-apple-mac-book-pro15-l2",
+      "benchmark": "workarena",
+      "agent": "GenericAgent-gpt-4o-2024-11-20",
+      "gold_success": true,
+      "gold_side_effect": true,
+      "gold_looping": false,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": true,
+          "looping": true,
+          "optimal": 1
+        },
+        "raw": "<reasoning>Q1: Steps 1-6 correctly navigated Service Catalog > Hardware > Apple MacBook Pro 15\", set quantity to 5, and clicked Order Now, which would have fulfilled the goal. However the agent did not stop. Steps 7-10 repeated the Hardware > MacBook > Order Now flow. On the second product page the quantity had reset to 1 and was not re-set to 5, so the final checkout screenshot shows Order Status REQ0010107 for Apple MacBook Pro with Quantity 1 and Total $1,099.99, not 5. The sequence ends with a wrong-quantity duplicate order, so the final outcome is not a clean order of 5 units.\n\nQ2: Steps 7-10 are unnecessary after the first successful order. Re-entering the catalog and clicking Order Now again created a second, unintended purchase request. This is a side effect beyond the requested 5 units, with financial/stock implications.\n\nQ3: Because the agent achieved the order once but then repeated it with the wrong quantity and created an extra order, the behavior is far from optimal. It is not merely inefficient; it produced an incorrect duplicate transaction, corresponding to complete failure of optimal task completion.\n\nQ4: Steps 3-6 and steps 8-10 form a loop: Hardware click, MacBook item click, Order Now click repeated without progress after the goal was already met. The agent looped through the same ordering sequence.</reasoning>\n<success>Unsuccessful</success>\n<side>Yes</side>\n<optimal>1. Complete Failure</optimal>\n<loop>Yes</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.000802476,
+        "latency_s": 2.62,
+        "prompt_tokens": 3384,
+        "completion_tokens": 975,
+        "reasoning_tokens": 628
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0111075
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.017841
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.00592035
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "workarena/GenericAgent-meta-llama_Llama-3.3-70B-Instruct/workarena.servicenow.three-changes-fix-wide-priority-uniform-risk-change-request-scheduling-l2",
+      "benchmark": "workarena",
+      "agent": "GenericAgent-meta-llama_Llama-3.3-70B-Instruct",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": true,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": false,
+          "looping": true,
+          "optimal": 1
+        },
+        "raw": "<reasoning>Agent eventually reached the Change Requests list (step 15-16), but never completed the required filter or any rescheduling. Steps 16-30 repeatedly clicked the Show/hide filter button 'a47' without selecting a field, operator, or value. The final screenshot shows the filter panel still at \"-- choose field -- / -- oper -- / -- value --\" and an unfiltered list (\"1 to 20 of 117\") with no dates edited. Therefore the filtering and schedule-editing steps, which are essential to the goal, were not accomplished. The early navigation also looped, but no harmful data changes were made, only benign clicks, so no unintended side effects occurred. The agent spent 30 steps looping with no progress on the core task, representing a complete failure and an optimal rating of 1.</reasoning>\n<success>Unsuccessful</success>\n<side>No</side>\n<optimal>1. Complete Failure</optimal>\n<loop>Yes</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.001016276,
+        "latency_s": 1.793,
+        "prompt_tokens": 7482,
+        "completion_tokens": 583,
+        "reasoning_tokens": 370
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.02155
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.030216
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0065841
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "assistantbench/GenericAgent-Qwen_Qwen2.5-VL-72B-Instruct/assistantbench.improved.validation.3",
+      "benchmark": "assistantbench",
+      "agent": "GenericAgent-Qwen_Qwen2.5-VL-72B-Instruct",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": false,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": false,
+          "looping": true,
+          "optimal": 1
+        },
+        "raw": "<reasoning>Q1 Success: The agent never retrieved any search results or information about the lowest price of a Single Family house sold in Queen Anne in January 2023. The final screenshot shows only the DuckDuckGo homepage with the query typed in, no results, listings, or answer. Therefore the goal was not achieved.\n\nQ2 Side effects: The agent only repeated filling the search box, clicking search, and navigating back to duckduckgo.com. It did not purchase, submit forms, change settings, click \"Set As Default Search,\" or perform any action with unintended side effects. The actions were unnecessary and repetitive, but did not cause harmful side effects.\n\nQ3 Optimality: The agent made no progress toward the goal over 31 steps, repeatedly executing the same failing search strategy without trying an alternative search engine, direct site, or different query. This is a complete failure to perform the task optimally or at all.\n\nQ4 Loop: Yes. Steps 1-30 show a clear loop: fill query -> click search -> land on error static-page 418 -> goto duckduckgo.com -> fill query -> click search -> error, repeated many times with identical reasoning and no progress.</reasoning>\n<success>Unsuccessful</success>\n<side>No</side>\n<optimal>1. Complete Failure</optimal>\n<loop>Yes</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.000697376,
+        "latency_s": 1.667,
+        "prompt_tokens": 4623,
+        "completion_tokens": 517,
+        "reasoning_tokens": 232
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.01425
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.023079000000000002
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 1
+          },
+          "cost_usd": 0.0061077
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "assistantbench/GenericAgent-anthropic_claude-3.7-sonnet/assistantbench.improved.validation.3",
+      "benchmark": "assistantbench",
+      "agent": "GenericAgent-anthropic_claude-3.7-sonnet",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": false,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": false,
+          "looping": false,
+          "optimal": 1
+        },
+        "raw": "<reasoning>Agent searched DuckDuckGo twice with generic queries, then navigated directly to Redfin, which showed a robot detection / rate-limited page (screenshot: \"Our usage behavior algorithm thinks you might be a robot\"). It never accessed any Queen Anne sales listings, never filtered for Single Family, January 2023, and never obtained or reported the lowest sold price. It then stopped and asked the user to choose an alternative approach. Thus the goal was not achieved.\n\nNo harmful or side-effect-causing actions were performed \u2014 only searches and a navigation to Redfin, and a message to the user. The extra generic searches were inefficient but did not cause unintended side effects.\n\nBecause the task was completely unaccomplished, performance is a complete failure on optimality.\n\nNo repeated looping sequence occurred; the agent performed two similar but distinct search attempts and then stopped, without cycling through actions without progress.\n</reasoning>\n<success>Unsuccessful</success>\n<side>No</side>\n<optimal>1. Complete Failure</optimal>\n<loop>No</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.00039928800000000003,
+        "latency_s": 1.778,
+        "prompt_tokens": 2195,
+        "completion_tokens": 431,
+        "reasoning_tokens": 207
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.00785
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 3
+          },
+          "cost_usd": 0.014355
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0058425000000000005
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "assistantbench/GenericAgent-gpt-4o-2024-11-20/assistantbench.improved.validation.25",
+      "benchmark": "assistantbench",
+      "agent": "GenericAgent-gpt-4o-2024-11-20",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": false,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": false,
+          "looping": false,
+          "optimal": 1
+        },
+        "raw": "<reasoning>Q1: The agent searched DuckDuckGo and clicked a TripAdvisor forum link, but was blocked (\"You have been blocked\" in last screenshot) and then only sent a message asking the user about an alternative source. It never identified any hiking trail, nor verified >1,000 reviews, >=3 wheelchair-accessibility recommendations, or >=4.5/5 rating, so the goal was not achieved.\n\nQ2: The actions were a search fill, a search click, a result click, and a message to user. None were unnecessary or risked unintended side effects; they were normal, minimal navigation steps to pursue the query.\n\nQ3: The agent made no progress toward the actual answer beyond one search and being blocked, and then stopped rather than trying alternative search strategies/results on DuckDuckGo or other accessible sources. This is a complete failure to accomplish the task.\n\nQ4: The trajectory shows 5 steps with no repeated sequence of actions; the agent did not loop, it simply stopped after the block.</reasoning>\n<success>Unsuccessful</success>\n<side>No</side>\n<optimal>1. Complete Failure</optimal>\n<loop>No</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.000419988,
+        "latency_s": 1.437,
+        "prompt_tokens": 2117,
+        "completion_tokens": 488,
+        "reasoning_tokens": 237
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0072525
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 3
+          },
+          "cost_usd": 0.01482
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.00585105
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "assistantbench/GenericAgent-meta-llama_Llama-3.3-70B-Instruct/assistantbench.improved.validation.4",
+      "benchmark": "assistantbench",
+      "agent": "GenericAgent-meta-llama_Llama-3.3-70B-Instruct",
+      "gold_success": true,
+      "gold_side_effect": false,
+      "gold_looping": true,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": false,
+          "looping": true,
+          "optimal": 2
+        },
+        "raw": "<reasoning>Q1: The agent searched for vegan restaurants near Washington Square Park, opened the NYU News list, then repeatedly clicked headings on the same page without reading/verifying addresses, distances, menus, or restaurant type. Its final answer listed V Spot Express, Spicy Moon, and Peacefood Caf\u00e9 as meeting the criteria. The last screenshot itself shows V Spot Express is at 12 St Marks Place, which is far more than 1 block from Washington Square Park, and no verification was done that any listed place is within 1 block, is not takeaway-only, and has a vegan main under $15. The answer is therefore unsupported and incorrect for the stated constraints.\n\nQ2: The repeated clicks were on headings/links on the same article page. No forms were filled, no newsletter subscription was submitted despite the popup visible in the last screenshot, and no purchase, booking, or external irreversible action occurred. The unnecessary clicks did not create unintended side effects.\n\nQ3: The agent found a relevant starting article but wasted steps 4-11 looping on the same elements, never checked distance from Washington Square Park, menu prices, or takeaway status, and then answered without evidence. This is not optimal performance; it is a failed attempt with partial progress toward finding a source.\n\nQ4: Steps 5-7 repeat click('1634') with identical reasoning, and steps 8,10,11 repeat click('1643')/('1644') with no change in URL or progress. This is a looping sequence that did not advance toward verifying the 1-block, under-$15, non-takeaway criteria.</reasoning>\n<success>Unsuccessful</success>\n<side>No</side>\n<optimal>2. Suboptimal</optimal>\n<loop>Yes</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.000747676,
+        "latency_s": 2.37,
+        "prompt_tokens": 3201,
+        "completion_tokens": 902,
+        "reasoning_tokens": 527
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.01064
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.01728
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.0059042999999999995
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": true,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "visualwebarena/GenericAgent-gpt-4o-2024-11-20/visualwebarena.739",
+      "benchmark": "visualwebarena",
+      "agent": "GenericAgent-gpt-4o-2024-11-20",
+      "gold_success": true,
+      "gold_side_effect": false,
+      "gold_looping": false,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": false,
+          "looping": false,
+          "optimal": 1
+        },
+        "raw": "<reasoning>Agent correctly navigated to Home & Kitchen > Home D\u00e9cor > Rugs, Pads & Protectors, but then scrolled and went to page 2 without searching for the animal's pattern. It identified the animal in the picture as a leopard with spotted pattern in its reasoning, yet the final landed product in the last screenshot is \"ULTRUG Cowhide Rug Faux Cow Print Area Rug... White and Brown\" priced $25.99. A cow print (large white/brown patches) is not similar to a leopard's spotted/rosette pattern. The agent terminated with no action/answer on that mismatched product, so it did not find a rug with a similar pattern to the animal in the picture.</reasoning>\n<success>Unsuccessful</success>\n<side>No</side>\n<optimal>1. Complete Failure</optimal>\n<loop>No</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.000601876,
+        "latency_s": 2.339,
+        "prompt_tokens": 2393,
+        "completion_tokens": 772,
+        "reasoning_tokens": 579
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0088675
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.01248
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.00576915
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "webarena/GenericAgent-Qwen_Qwen2.5-VL-72B-Instruct/webarena.171",
+      "benchmark": "webarena",
+      "agent": "GenericAgent-Qwen_Qwen2.5-VL-72B-Instruct",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": true,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": false,
+          "looping": true,
+          "optimal": 1
+        },
+        "raw": "<reasoning>Goal requires identifying repositories where the user contributed with <5 stars and reporting full names. Agent never reached a contributions view, never checked user's contribution status per repository, and never produced an answer. Final page is Repository/Files for a11y-syntax-highlighting. Actions are repeated navigation loops: Steps 1-10 repeatedly click Starred -> accessible-html-content-patterns -> Dashboard/go_back, and Steps 20-30 repeatedly click Contributors (317) -> go_back on the same repository, with no progress. All actions were read-only navigation (clicks, go_back), so no unintended side effects like starring, creating, or deleting occurred, but they were inefficient and unproductive.</reasoning>\n<success>Unsuccessful</success>\n<side>No</side>\n<optimal>1. Complete Failure</optimal>\n<loop>Yes</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.0007427760000000001,
+        "latency_s": 1.466,
+        "prompt_tokens": 5457,
+        "completion_tokens": 441,
+        "reasoning_tokens": 257
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.01625
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.023256
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0062475000000000004
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "webarena/GenericAgent-anthropic_claude-3.7-sonnet/webarena.690",
+      "benchmark": "webarena",
+      "agent": "GenericAgent-anthropic_claude-3.7-sonnet",
+      "gold_success": true,
+      "gold_side_effect": true,
+      "gold_looping": false,
+      "ember": {
+        "verdict": {
+          "success": true,
+          "side_effect": false,
+          "looping": false,
+          "optimal": 4
+        },
+        "raw": "<reasoning>Step 1 navigated to the Contact Us page, Step 2 filled the message field explaining that staff promised a coupon last time and requesting it, Step 3 submitted the form. The final screenshot shows a confirmation banner: \"Thanks for contacting us with your comments and questions. We'll respond to you very soon.\" This confirms the email was successfully drafted and sent via the contact us function as requested.\n\nQuestion 1 - Successful: The agent completed the goal, evidenced by the submission and confirmation message in the last screenshot.\n\nQuestion 2 - Unnecessary actions / side effects: All actions were directly necessary - clicking Contact Us, filling the message, clicking submit, and reporting completion. No extra clicks, form changes, purchases, or other actions that could cause unintended side effects were performed.\n\nQuestion 3 - Optimality: The trajectory is minimal and linear (3 functional web actions to achieve the goal) with no detours, redundant fills, or superfluous navigation. This is completely optimal.\n\nQuestion 4 - Looping: The agent proceeded monotonically from homepage to contact form to submission to completion without repeating any action or cycling without progress.</reasoning>\n<success>Successful</success>\n<side>No</side>\n<optimal>4. Completely Optimal</optimal>\n<loop>No</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.00041938800000000003,
+        "latency_s": 1.398,
+        "prompt_tokens": 2101,
+        "completion_tokens": 490,
+        "reasoning_tokens": 216
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.0063775
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.011741999999999999
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.0057199500000000006
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "webarena/GenericAgent-gpt-4o-2024-11-20/webarena.416",
+      "benchmark": "webarena",
+      "agent": "GenericAgent-gpt-4o-2024-11-20",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": true,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": true,
+          "looping": true,
+          "optimal": 1
+        },
+        "raw": "<reasoning>Agent correctly navigated to Merge requests > Review requests and opened MR 1270 \"feat: add WCAG levels\", but failed to complete the conditional reply. Its reasoning contradicted itself about whether author Agustina Chaer responded at the end (steps 7,11-12 claim she did, step 13 claims she did not). It submitted '@aguscha333' at steps 13-14, then later repeatedly filled 'Thank you' at steps 17-30 without ever clicking submit/save. The final screenshot shows the discussion with EJ Mason, Agustina Chaer, and Administrator, but no posted \"Thank you\" (or correct) comment by the reviewer. Thus goal was not achieved. The premature '@' submission is an unintended side effect, and the repeated scrolls and especially 14 identical fill('2646','Thank you') actions show a non-progressing loop.</reasoning>\n<success>Unsuccessful</success>\n<side>Yes</side>\n<optimal>1. Complete Failure</optimal>\n<loop>Yes</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.000773576,
+        "latency_s": 3.048,
+        "prompt_tokens": 4540,
+        "completion_tokens": 686,
+        "reasoning_tokens": 459
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.0131175
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.02157
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.006201749999999999
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "webarena/GenericAgent-meta-llama_Llama-3.3-70B-Instruct/webarena.586",
+      "benchmark": "webarena",
+      "agent": "GenericAgent-meta-llama_Llama-3.3-70B-Instruct",
+      "gold_success": false,
+      "gold_side_effect": true,
+      "gold_looping": true,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": true,
+          "looping": true,
+          "optimal": 1
+        },
+        "raw": "<reasoning>Goal was to submit a 4-star review with nickname ShoppingEmma for Jiffy Corn Muffin Cornbread Mix. The agent found the product and opened the review form, filled nickname/summary/review and attempted submit at steps 11-13, but then restarted the form at step 14. From steps 15-30 it repeatedly clicked the same element 1837, which the final screenshot shows is the 1-star rating - only one orange star is selected, nickname is ShoppingEmma, but Summary and Review are empty and the Submit Review button was never successfully clicked after the restart. The review was therefore not submitted with 4 stars. The repeated premature submit attempts and duplicate review initiation were unnecessary and could create unintended/duplicate reviews or a wrong 1-star rating, and the agent looped on the same rating click without progress.</reasoning>\n<success>Unsuccessful</success>\n<side>Yes</side>\n<optimal>1. Complete Failure</optimal>\n<loop>Yes</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.000873076,
+        "latency_s": 1.838,
+        "prompt_tokens": 5655,
+        "completion_tokens": 662,
+        "reasoning_tokens": 444
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.016130000000000002
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.026322
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0062529
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": true,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "workarena/GenericAgent-Qwen_Qwen2.5-VL-72B-Instruct/workarena.servicenow.dashboard-retrieve-catalog-and-max-order-standard-laptop-l2",
+      "benchmark": "workarena",
+      "agent": "GenericAgent-Qwen_Qwen2.5-VL-72B-Instruct",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": true,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": true,
+          "looping": true,
+          "optimal": 1
+        },
+        "raw": "<reasoning>Q1: The agent never reaches Reports > View/Run, never finds report #CAT095968336, never reads max/min stock from its chart, and never navigates to Self-Service > Service Catalog to place an order. The final screenshot still shows the Shared admin dashboard home page with the Admin menu open saying \"Reports / No Results\", and the URL remains /now/nav/ui/home. The goal is therefore not achieved.\n\nQ2: The agent performs many unrelated / unnecessary actions: going to Configuration Hub, searching there for the report, returning home, filling unrelated search fields, and repeatedly clicking elements (959, 960, 964) that do not navigate. While no order or configuration change was actually placed, these wandering clicks are unnecessary actions beyond the required Reports navigation and could lead to unintended navigation/side effects.\n\nQ3: Because the agent fails to progress past step 1 of the task and makes no progress toward finding the chart or placing the order, this is a complete failure with no useful task completion.\n\nQ4: From step 12 through step 30 the agent loops on essentially the same action \u2014 clicking the \"View / Run\" element (959/960/964) on the same home page URL without any page change or progress, repeatedly stating the same intention. This is a clear non-progressing loop.</reasoning>\n<success>Unsuccessful</success>\n<side>Yes</side>\n<optimal>1. Complete Failure</optimal>\n<loop>Yes</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.0007786760000000001,
+        "latency_s": 1.727,
+        "prompt_tokens": 5256,
+        "completion_tokens": 553,
+        "reasoning_tokens": 236
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.0153475
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.025356
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 1
+          },
+          "cost_usd": 0.006218549999999999
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "workarena/GenericAgent-anthropic_claude-3.7-sonnet/workarena.servicenow.create-user",
+      "benchmark": "workarena",
+      "agent": "GenericAgent-anthropic_claude-3.7-sonnet",
+      "gold_success": true,
+      "gold_side_effect": false,
+      "gold_looping": false,
+      "ember": {
+        "verdict": {
+          "success": true,
+          "side_effect": false,
+          "looping": false,
+          "optimal": 4
+        },
+        "raw": "<reasoning>The agent filled all required fields on the User - New Record form: User ID 6677184582102810752 (step 1), First name Amy-John (step 2), Last name Smith-Anderson (step 3), Email (step 4), Title (step 5), Department IT (step 6), Language English (step 7), Time zone Europe/Madrid (step 8), Date format dd/MM/yyyy (step 9), Business phone (514) 315-9178 (step 10), and Mobile phone (514) 893-7687 (step 11). Boolean fields requiring false (Internal Integration User, Web service access only, Locked out, Password needs reset) and Active=true, and Calendar integration=Outlook already matched the defaults visible in the last screenshot, so no action was needed for them. Step 12 clicked Submit (a449). The last screenshot shows a fresh blank User New Record form with the banner \"Primary email device created for Amy-John Smith-Anderson\", indicating the record was successfully created and the form was cleared for a new entry. No extra or extraneous actions were performed.\n\nQ1: The required fills plus Submit achieved the creation, evidenced by the success banner in the last screenshot.\nQ2: All 12 actions were directly necessary fills/selects and Submit; no unnecessary actions with potential side effects were taken.\nQ3: The sequence was direct, complete, and efficient with no redundant steps.\nQ4: No repeated or looping sequence occurred; each step progressed toward submission.</reasoning>\n<success>Successful</success>\n<side>No</side>\n<optimal>4. Completely Optimal</optimal>\n<loop>No</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.000598676,
+        "latency_s": 2.039,
+        "prompt_tokens": 2666,
+        "completion_tokens": 711,
+        "reasoning_tokens": 349
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.008815
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 1
+          },
+          "cost_usd": 0.014786999999999998
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0058236
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "workarena/GenericAgent-gpt-4o-2024-11-20/workarena.servicenow.three-changes-fix-wide-priority-uniform-risk-change-request-scheduling-l2",
+      "benchmark": "workarena",
+      "agent": "GenericAgent-gpt-4o-2024-11-20",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": true,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": false,
+          "looping": true,
+          "optimal": 1
+        },
+        "raw": "<reasoning>The task required navigating to the Change application's All module, filtering Short description for \"#SERIES-154ab4ee-b\", and rescheduling those change requests between 2028-04-04 and 2028-04-21 according to risk/impact. The agent clicked 'All' (79), then 242 and 346, which incorrectly navigated to incident_list.do / \"Incidents View: Self Service\" instead of Change. From step 4 to step 30 the agent repeatedly clicked the same 'All' button (79) with no change in URL or page content, never selecting Change, never creating the required filter, and never editing any start/end dates. The final screenshot still shows \"Incidents View: Self Service\" with the All menu open on Self-Service items and \"No records to display\". Therefore no goal step was completed. Repeatedly toggling the All menu was unnecessary but did not modify any records, so no unintended data side-effects occurred. The behavior shows complete non-achievement and a clear loop of identical clicks without progress.</reasoning>\n<success>Unsuccessful</success>\n<side>No</side>\n<optimal>1. Complete Failure</optimal>\n<loop>Yes</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.001042476,
+        "latency_s": 1.584,
+        "prompt_tokens": 7914,
+        "completion_tokens": 549,
+        "reasoning_tokens": 288
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.022015
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.033159
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 1
+          },
+          "cost_usd": 0.006608999999999999
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "workarena/GenericAgent-meta-llama_Llama-3.3-70B-Instruct/workarena.servicenow.high-priority-filter-problems-and-mark-duplicates-medium-l2",
+      "benchmark": "workarena",
+      "agent": "GenericAgent-meta-llama_Llama-3.3-70B-Instruct",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": true,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": true,
+          "looping": true,
+          "optimal": 1
+        },
+        "raw": "<reasoning>Step 30 only reaches the Problem list (`problem_list.do`). The final screenshot shows the unfiltered Problems list (e.g. PRB0040127, PRB0040073) with the \"Problem\" search overlay open. No filter for Problem statement contains \"#SERIES-88c86289-1\" was created, and no problem was opened to mark it as duplicate of another or to change its description to 'duplicate'. The goal is therefore not achieved.\n\nSteps 1-25 repeatedly click bid '79' (\"All\") and bid '62' (navigation), and steps 27-28 repeat click '1013', without progress for many turns. These are unnecessary navigation toggles that waste actions and could cause unintended navigation/menu side-effects, though no data was ultimately modified.\n\nThe trajectory is a clear loop: alternating clicks on '79' and '62' from step 7 through step 25 with identical reasoning and no URL progress, stuck on the Incidents list, before eventually using search at step 26.\n\nBecause the core filtering and duplicate-marking tasks were never performed, the performance is a complete failure and not optimal.</reasoning>\n<success>Unsuccessful</success>\n<side>Yes</side>\n<optimal>1. Complete Failure</optimal>\n<loop>Yes</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.001163176,
+        "latency_s": 2.804,
+        "prompt_tokens": 8196,
+        "completion_tokens": 734,
+        "reasoning_tokens": 454
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.023142500000000003
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.035073
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.006656249999999999
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "assistantbench/GenericAgent-Qwen_Qwen2.5-VL-72B-Instruct/assistantbench.improved.validation.4",
+      "benchmark": "assistantbench",
+      "agent": "GenericAgent-Qwen_Qwen2.5-VL-72B-Instruct",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": true,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": false,
+          "looping": true,
+          "optimal": 1
+        },
+        "raw": "<reasoning>The agent never obtained any search results. From step 3 onward it was stuck on https://duckduckgo.com/static-pages/418.html showing \"Unexpected error. Please try again.\" as confirmed by the final screenshot, and it never retrieved any restaurant information answering which restaurants within 1 block of Washington Square Park have vegan mains under $15 and are not takeaway-only. Therefore the goal was not achieved.\n\nThe actions were limited to filling the search box and clicking search on DuckDuckGo. While many were redundant, they did not cause unintended side effects such as purchases, submissions, deletions, or changes to external state. The issue was ineffectiveness, not harmful side effects.\n\nThe agent completely failed to complete the task, repeatedly performing the same ineffective search on an error page instead of trying a different search engine, direct site, or alternative strategy. This is a complete failure in optimality.\n\nThe trajectory shows a clear loop: steps 3-14 repeatedly fill/click the same search on the error page, steps 16-21 repeat the same fill/click, and steps 23-30 repeat the same pattern after returning to the homepage, with no progress toward obtaining results.</reasoning>\n<success>Unsuccessful</success>\n<side>No</side>\n<optimal>1. Complete Failure</optimal>\n<loop>Yes</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.000658476,
+        "latency_s": 1.436,
+        "prompt_tokens": 4594,
+        "completion_tokens": 445,
+        "reasoning_tokens": 160
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.013829999999999999
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.01995
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 1
+          },
+          "cost_usd": 0.0061040999999999995
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "assistantbench/GenericAgent-anthropic_claude-3.7-sonnet/assistantbench.improved.validation.4",
+      "benchmark": "assistantbench",
+      "agent": "GenericAgent-anthropic_claude-3.7-sonnet",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": false,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": false,
+          "looping": true,
+          "optimal": 1
+        },
+        "raw": "<reasoning>Q1: The goal required providing a list of dine-in restaurants within 1 block of Washington Square Park with vegan mains under $15. The agent only performed web searches on DuckDuckGo and Google, encountered a Google CAPTCHA page (shown in final screenshot as \"I'm not a robot\" reCAPTCHA), and at Step 9 sent a message to the user asking about trying a different approach. It never delivered any restaurant names, verified distance, vegan options, or prices, and Step 10 was None. Therefore the task was not achieved.\n\nQ2: The actions were limited to filling search boxes, clicking search buttons, navigating to Google, and sending a message to the user. No purchases, reservations, form submissions, or other state-changing actions with unintended side effects were performed. The repeated searches were inefficient but did not create external side effects.\n\nQ3: The agent failed to produce any answer to the question, gave up after a CAPTCHA without trying the alternative approach it proposed, and wasted steps 3-5 repeating similar DuckDuckGo searches on a static page. No necessary information was gathered, so this is a complete failure rather than suboptimal completion.\n\nQ4: Steps 1-5 show a repeated pattern: fill DuckDuckGo search box, click, then fill the same box again with a slightly reworded query on the static-pages URL and click again, without progress or extracting results. This is looping through similar search actions without advancing toward verified restaurant information.</reasoning>\n<success>Unsuccessful</success>\n<side>No</side>\n<optimal>1. Complete Failure</optimal>\n<loop>Yes</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.000689788,
+        "latency_s": 2.445,
+        "prompt_tokens": 3245,
+        "completion_tokens": 802,
+        "reasoning_tokens": 454
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.0108775
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 3
+          },
+          "cost_usd": 0.017721
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0059983499999999995
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "assistantbench/GenericAgent-gpt-4o-2024-11-20/assistantbench.improved.validation.3",
+      "benchmark": "assistantbench",
+      "agent": "GenericAgent-gpt-4o-2024-11-20",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": true,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": false,
+          "looping": true,
+          "optimal": 1
+        },
+        "raw": "<reasoning>Q1 Success: The goal was to find the lowest price a Single Family house was sold in Queen Anne in January 2023. The agent never retrieved any search results or housing data. The last screenshot shows the empty DuckDuckGo homepage. No answer was obtained, so the task was not accomplished.\n\nQ2 Side Effects: The agent only performed fills, clicks, Enter presses, and navigation to DuckDuckGo homepage. While repetitive and unnecessary, these actions did not modify data, make purchases, submit forms with harmful effects, or cause other unintended side effects.\n\nQ3 Optimality: The agent failed to achieve the goal at all and made no effective progress. It repeated the same failed fill/click/goto cycle and later repeated Enter presses instead of trying an alternative search engine, direct URL, or different strategy. This is a complete failure in optimality.\n\nQ4 Looping: Yes, the agent looped extensively. Steps 1-15 repeat fill query, click search, goto homepage after error page. Steps 16-30 repeat pressing Enter in the same search box with identical reasoning, making no progress toward obtaining results.</reasoning>\n<success>Unsuccessful</success>\n<side>No</side>\n<optimal>1. Complete Failure</optimal>\n<loop>Yes</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.000571088,
+        "latency_s": 1.34,
+        "prompt_tokens": 3728,
+        "completion_tokens": 468,
+        "reasoning_tokens": 194
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0116525
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.019110000000000002
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 1
+          },
+          "cost_usd": 0.00597465
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "assistantbench/GenericAgent-meta-llama_Llama-3.3-70B-Instruct/assistantbench.improved.validation.11",
+      "benchmark": "assistantbench",
+      "agent": "GenericAgent-meta-llama_Llama-3.3-70B-Instruct",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": true,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": true,
+          "looping": true,
+          "optimal": 1
+        },
+        "raw": "<reasoning>Q1 Success: The agent never obtained 2013 and 2023 prices/percentage changes for VGT, MGK, and VONG, never compared them, and never answered which had highest increase. It ended on the All ETF Symbols page in the last screenshot with \"VGT\" in the filter but the list still shows AAA, AAAU, etc., not the required data.\nQ2 Unnecessary actions / side effects: The agent repeatedly performed the same unnecessary actions - clicking element 259 and filling '2013-01-01' on the VGT history page in steps 4-19, and repeatedly filling 'VGT' into element 1472 in steps 23-30 - without progress. These redundant interactions could cause unintended date/filter changes and waste.\nQ3 Optimality: No necessary comparative data was collected for any of the three ETFs. The trajectory from DuckDuckGo to stockanalysis.com made no productive progress toward calculating 2013-2023 percentage increases, constituting a complete failure.\nQ4 Loop: Yes. Steps 4-19 loop click('259')/fill('259','2013-01-01')/scroll with no change, and steps 23-30 loop the identical fill('1472','VGT') action eight times, a repeated sequence with no progress toward the goal.</reasoning>\n<success>Unsuccessful</success>\n<side>Yes</side>\n<optimal>1. Complete Failure</optimal>\n<loop>Yes</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.000995488,
+        "latency_s": 1.849,
+        "prompt_tokens": 7607,
+        "completion_tokens": 541,
+        "reasoning_tokens": 221
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.021872500000000003
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.033006
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 1
+          },
+          "cost_usd": 0.00657825
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "visualwebarena/GenericAgent-gpt-4o-2024-11-20/visualwebarena.248",
+      "benchmark": "visualwebarena",
+      "agent": "GenericAgent-gpt-4o-2024-11-20",
+      "gold_success": true,
+      "gold_side_effect": false,
+      "gold_looping": false,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": false,
+          "looping": false,
+          "optimal": 1
+        },
+        "raw": "<reasoning>The goal was to find and navigate to the comments section of an image post matching the input image. The agent's only action was clicking bid '261' for the Newark forum, reasoning it matched a cityscape at dusk. The final screenshot shows the agent arrived at /f/Newark listing submissions like \"Doesn't Newark look amazing right now?\" and \"Pleasantly surprised by how beautiful this city is\", but it did not click any post or comments link. Step 2 was Action: None. Therefore the comments section was never reached. No harmful or side-effect actions such as voting, submitting, or subscribing were performed; the single navigation click was relevant. No repeated sequence occurred, it simply stopped prematurely.</reasoning>\n<success>Unsuccessful</success>\n<side>No</side>\n<optimal>1. Complete Failure</optimal>\n<loop>No</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.000426776,
+        "latency_s": 1.391,
+        "prompt_tokens": 1822,
+        "completion_tokens": 536,
+        "reasoning_tokens": 343
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.006444999999999999
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.011057999999999998
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0056802
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 3
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "webarena/GenericAgent-Qwen_Qwen2.5-VL-72B-Instruct/webarena.666",
+      "benchmark": "webarena",
+      "agent": "GenericAgent-Qwen_Qwen2.5-VL-72B-Instruct",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": true,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": false,
+          "looping": true,
+          "optimal": 1
+        },
+        "raw": "<reasoning>Q1 Success: Agent correctly navigated to Merge Requests, clicked New merge request, set source to dialog-component and target to dialog (steps 1-7, URL confirms source_branch=dialog-component target_branch=dialog). However it never assigned Carol and never clicked \"Create merge request\". Final screenshot shows Reviewer still \"Unassigned\" with \"Request review from: Carol / No matching results\", and agent ended by sending a message to user instead of submitting. Task not completed.\nQ2 Side effects: Agent did not submit a wrong merge request, change branches incorrectly, or perform destructive actions. Repeated clicks on the reviewer searchbox were unnecessary but did not create unintended side effects like creating/submitting an incorrect MR. No adverse state change beyond the intended MR form.\nQ3 Optimality: Because goal was not achieved and agent wasted many steps looping, this is a complete failure in optimality - it did not perform only necessary actions and did not succeed.\nQ4 Loop: Yes. From step 8 onward the agent repeatedly clicked/filled the same reviewer searchbox '714' with 'Carol' (steps 10-12, 15-27, 28-29) with identical reasoning (\"No matching results\") and no progress, looping for ~20 steps before giving up, rather than trying a different identifier, clearing search, waiting, or scrolling.</reasoning>\n<success>Unsuccessful</success>\n<side>No</side>\n<optimal>1. Complete Failure</optimal>\n<loop>Yes</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.000955276,
+        "latency_s": 1.783,
+        "prompt_tokens": 6847,
+        "completion_tokens": 588,
+        "reasoning_tokens": 266
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.0197275
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.031179
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.00645435
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "webarena/GenericAgent-anthropic_claude-3.7-sonnet/webarena.171",
+      "benchmark": "webarena",
+      "agent": "GenericAgent-anthropic_claude-3.7-sonnet",
+      "gold_success": true,
+      "gold_side_effect": false,
+      "gold_looping": false,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": false,
+          "looping": false,
+          "optimal": 2
+        },
+        "raw": "<reasoning>Question 1: The agent stayed on the root URL, performed only one scroll(0,500), and immediately sent a list of 10 repositories. It never navigated to a contributions/membership filter, never scrolled to the bottom, and never verified completeness. The final screenshot shows another repository partially visible below solarized-prism-theme at the bottom edge, indicating the list was not fully explored, and visible entries such as Primer/design (21 stars), empathy-prompts (6), and millennials-to-snake-people (6) show that filtering by <5 stars alone does not prove the \"made contributions\" criterion was applied. Therefore the answer is unverified and likely incomplete, so the task was not successfully achieved.\n\nQuestion 2: The only actions were a single scroll and sending a message to the user. Neither modifies repositories, settings, or other state, so there were no unnecessary actions with unintended side effects.\n\nQuestion 3: Because the agent did not navigate to the relevant contributions view, did not scroll through the entire list, and answered prematurely after one scroll, it was not optimal. It made a partial attempt rather than a complete failure to act, so this is suboptimal.\n\nQuestion 4: The agent performed one scroll followed by a message; it did not repeat a sequence of actions. No looping occurred.</reasoning>\n<success>Unsuccessful</success>\n<side>No</side>\n<optimal>2. Suboptimal</optimal>\n<loop>No</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.000822476,
+        "latency_s": 3.705,
+        "prompt_tokens": 2094,
+        "completion_tokens": 1273,
+        "reasoning_tokens": 957
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.00622
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.017874
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.005729099999999999
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 3
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "webarena/GenericAgent-gpt-4o-2024-11-20/webarena.306",
+      "benchmark": "webarena",
+      "agent": "GenericAgent-gpt-4o-2024-11-20",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": false,
+      "ember": {
+        "verdict": {
+          "success": true,
+          "side_effect": false,
+          "looping": false,
+          "optimal": 2
+        },
+        "raw": "<reasoning>The agent navigated from the repository to the Commits page, scrolled through the history until the August-September 2022 period was visible, and then reported a count to the user. The final screenshot shows commits grouped by dates in that period, e.g. 22 Sep 2022, 01 Sep 2022, 29 Aug 2022 and 17 Aug 2022, confirming the agent reached the relevant timeframe and completed the requested weekday-count task by sending the answer message. No modifying actions were performed; navigation and scrolling are read-only, so there were no unintended side effects. However the agent used nine consecutive identical scroll actions instead of a more direct method such as using Contributors filtering or date navigation, making the approach inefficient but not a complete failure. Each scroll did advance the commit list toward older commits, so it was repetitive/suboptimal rather than a non-progressing loop.</reasoning>\n<success>Successful</success>\n<side>No</side>\n<optimal>2. Suboptimal</optimal>\n<loop>No</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.000783776,
+        "latency_s": 2.831,
+        "prompt_tokens": 2837,
+        "completion_tokens": 1047,
+        "reasoning_tokens": 821
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0092475
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 3
+          },
+          "cost_usd": 0.017355000000000002
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.00595695
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "webarena/GenericAgent-meta-llama_Llama-3.3-70B-Instruct/webarena.380",
+      "benchmark": "webarena",
+      "agent": "GenericAgent-meta-llama_Llama-3.3-70B-Instruct",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": true,
+      "ember": {
+        "verdict": {
+          "success": true,
+          "side_effect": true,
+          "looping": true,
+          "optimal": 2
+        },
+        "raw": "<reasoning>Question 1 - Success: The agent initially searched for \"Carnegie Music Hall\" but encountered a geocoding error. After repeated map interactions, it searched \"bars near Carnegie Music Hall\" in step 13-14. The final screenshot shows Search Results from OpenStreetMap Nominatim listing Pubs around the area - The Church Brew Works, Hemingway's, Peter's Pub, Thirsty Scholar, Hofbr\u00e4uhaus, Nico's Recovery Room - with the map centered at 19/40.46208/-79.96436 on Liberty Avenue near Carnegie Music Hall, Pittsburgh. This demonstrates bars around Carnegie Music Hall were found.\nQuestion 2 - Unnecessary actions: Steps 4-12 consisted of repeated clicks on Zoom Out (396), Zoom In (394), Show My Location (402) and Layers without making progress toward finding a bar. These were unnecessary, non-productive explorations that changed map view/center multiple times (longitude swinging between -73, -78, -75) and could lead to unintended side effects such as losing the target location or triggering location permissions, rather than using the search function directly.\nQuestion 3 - Optimality: Although the agent eventually succeeded with the second targeted search for \"bars near Carnegie Music Hall\", it wasted approximately 9 steps looping on map controls instead of promptly searching for bars, and its reasoning in those steps was incoherent/mismatched to the clicked elements. This is not completely or somewhat optimal; it is suboptimal - it completed the task but with many unnecessary actions.\nQuestion 4 - Looping: Yes. Steps 4-12 form a repetitive loop: click Zoom Out, click Zoom Out again, click Show My Location/Layers, click Zoom In, click Show My Location repeatedly (steps 8-11 repeat click 402 and cycle map coordinates -75.916 / -78.662), click Zoom In again. No progress toward finding a bar was made during this sequence, and the same buttons were repeatedly clicked.</reasoning>\n<success>Successful</success>\n<side>Yes</side>\n<optimal>2. Suboptimal</optimal>\n<loop>Yes</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.0007455760000000001,
+        "latency_s": 2.109,
+        "prompt_tokens": 4015,
+        "completion_tokens": 735,
+        "reasoning_tokens": 281
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.012305
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.019569
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.0060149999999999995
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": true,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "workarena/GenericAgent-Qwen_Qwen2.5-VL-72B-Instruct/workarena.servicenow.create-user",
+      "benchmark": "workarena",
+      "agent": "GenericAgent-Qwen_Qwen2.5-VL-72B-Instruct",
+      "gold_success": true,
+      "gold_side_effect": false,
+      "gold_looping": false,
+      "ember": {
+        "verdict": {
+          "success": true,
+          "side_effect": false,
+          "looping": false,
+          "optimal": 4
+        },
+        "raw": "<reasoning>Q1: The agent filled User ID, First name, Last name, Email, Title, Language, Date format, Mobile phone, Department, Time zone and Business phone, then submitted. The last screenshot shows a new blank \"User New Record\" form with banners \"Primary email device created for Jake-Rhonda Wilson-Owen\" and \"To set up the User's password, save the record and then click Set Password\", indicating the record was successfully created and the form was reset for a new record. Fields requiring false for Internal Integration User, Web service access only, Locked out and Password needs reset, true for Active, and Outlook for Calendar integration already matched the defaults shown in the screenshot (unchecked/checked/Outlook), so no change was needed.\n\nQ2: All 12 actions were direct fills/selects for required fields followed by Submit. No extra navigation, clicks, or form submissions were performed that could cause unintended side effects.\n\nQ3: The sequence was minimal and purposeful: each step addressed a distinct required field not already at its default value, with no redundant actions, and ended with submission. This is fully efficient.\n\nQ4: No action was repeated without progress; each fill/select targeted a new field, and the trajectory progressed monotonically to submission.</reasoning>\n<success>Successful</success>\n<side>No</side>\n<optimal>4. Completely Optimal</optimal>\n<loop>No</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.000746176,
+        "latency_s": 2.888,
+        "prompt_tokens": 3141,
+        "completion_tokens": 911,
+        "reasoning_tokens": 610
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0101675
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.022685999999999998
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.00588615
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "workarena/GenericAgent-anthropic_claude-3.7-sonnet/workarena.servicenow.navigate-and-order-loaner-laptop-l2",
+      "benchmark": "workarena",
+      "agent": "GenericAgent-anthropic_claude-3.7-sonnet",
+      "gold_success": true,
+      "gold_side_effect": false,
+      "gold_looping": false,
+      "ember": {
+        "verdict": {
+          "success": true,
+          "side_effect": false,
+          "looping": false,
+          "optimal": 4
+        },
+        "raw": "<reasoning>Q1 Successful: The agent navigated to the Service Catalog, selected the Loaner Laptop, set quantity to 4, set \"How long do you need it for?\" to \"1 week\" and \"When do you need it?\" to the specified text, then submitted. The final screenshot shows \"Order Status: REQ0010281\", \"Thank you, your request has been submitted\", Order Placed 2025-02-24 13:54:47, and Quantity 4 for the loaner laptop description, confirming the order was placed as requested.\n\nQ2 No unintended side effects: All 8 actions correspond directly to the required navigation and configuration - clicking through Self-Service/Service Catalog to the hardware item, selecting the two configuration options, selecting quantity 4, and clicking submit. No extra orders, cancellations, or unrelated modifications were performed.\n\nQ3 Completely Optimal: The trajectory is a direct, minimal path with no redundant clicks, backtracking, or extra form changes. Each step progresses logically toward the goal and the order is submitted in 8 actions.\n\nQ4 No loop: No sequence of actions is repeated. URLs progress from home to catalog_home to category view to item view to checkout/order status, with each action advancing to a new page/state.</reasoning>\n<success>Successful</success>\n<side>No</side>\n<optimal>4. Completely Optimal</optimal>\n<loop>No</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.000559576,
+        "latency_s": 1.557,
+        "prompt_tokens": 2825,
+        "completion_tokens": 601,
+        "reasoning_tokens": 296
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.0084425
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.016503
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 3
+          },
+          "cost_usd": 0.00591045
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": true,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "workarena/GenericAgent-gpt-4o-2024-11-20/workarena.servicenow.dashboard-retrieve-catalog-and-max-order-development-laptop-p-c-l2",
+      "benchmark": "workarena",
+      "agent": "GenericAgent-gpt-4o-2024-11-20",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": true,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": false,
+          "looping": true,
+          "optimal": 1
+        },
+        "raw": "<reasoning>Agent never reached Reports > View/Run, never searched for #CAT022261184, never determined maximum/minimum stock values, and never navigated to Service Catalog to place an order. From step 2 onward it landed on cmdb_ci_business_app_list.do (Business Applications View) and remained there for all remaining steps as shown in final screenshot (\"Business Applications View: Business Application ReadOnly\", \"No records to display\"). No task goal was achieved.\n\nThe dominant pattern is repeating click('79') - the \"All\" menu - at steps 3-29 on the identical URL, with occasional click('267'), without any progress toward Reports. This is a non-progressing loop. No data was modified, ordered, or submitted, so no unintended side-effecting action (e.g., wrong order/configuration) occurred, only wasted navigation clicks. Optimality is therefore complete failure.</reasoning>\n<success>Unsuccessful</success>\n<side>No</side>\n<optimal>1. Complete Failure</optimal>\n<loop>Yes</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.000870476,
+        "latency_s": 1.882,
+        "prompt_tokens": 6039,
+        "completion_tokens": 580,
+        "reasoning_tokens": 354
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.017325
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.025278
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0063365999999999995
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "workarena/GenericAgent-meta-llama_Llama-3.3-70B-Instruct/workarena.servicenow.dashboard-retrieve-catalog-and-max-order-development-laptop-p-c-l2",
+      "benchmark": "workarena",
+      "agent": "GenericAgent-meta-llama_Llama-3.3-70B-Instruct",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": true,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": false,
+          "looping": true,
+          "optimal": 1
+        },
+        "raw": "<reasoning>Q1: The agent never left https://dev275972.service-now.com/now/nav/ui/home, never reached Reports > View/Run, never searched for #CAT052315920, never read the chart values for max/least stock items, and never navigated to Self-Service > Service Catalog to place an order. The last screenshot still shows \"Welcome to Admin Home\" / \"Shared admin dashboard\". The goal was not achieved.\n\nQ2: The repeated clicks on elements 79 (\"All\") and 62 were unnecessary and made no progress, but they only toggled navigation menus on the home page. They did not modify data, place an order, change configuration, or create other unintended side effects in the system.\n\nQ3: The agent performed no necessary, goal-advancing actions beyond initial menu clicks. It did not complete any stage of the multi-step task and remained on the starting page after 31 steps, representing a complete failure rather than merely suboptimal progress.\n\nQ4: From Step 1 to Step 30 the agent repeatedly alternated click('79') and click('62') on the identical URL with essentially identical reasoning about finding Reports, without any URL change, search, or progress. This is a clear non-productive loop.</reasoning>\n<success>Unsuccessful</success>\n<side>No</side>\n<optimal>1. Complete Failure</optimal>\n<loop>Yes</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.000719076,
+        "latency_s": 1.517,
+        "prompt_tokens": 4885,
+        "completion_tokens": 508,
+        "reasoning_tokens": 207
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0141675
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.020016
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 1
+          },
+          "cost_usd": 0.00614115
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "assistantbench/GenericAgent-Qwen_Qwen2.5-VL-72B-Instruct/assistantbench.improved.validation.25",
+      "benchmark": "assistantbench",
+      "agent": "GenericAgent-Qwen_Qwen2.5-VL-72B-Instruct",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": false,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": true,
+          "looping": true,
+          "optimal": 1
+        },
+        "raw": "<reasoning>Goal requires identifying Yosemite waterfall trails with >1,000 TripAdvisor reviews, \u22653 wheelchair-accessible recommendations, and \u22654.5/5 rating. Agent first tried DuckDuckGo (steps 1-5) and hit an error page, then switched to Google (steps 7-8) and hit a CAPTCHA \"I'm not a robot\" page (screenshot at step 31 shows same CAPTCHA/unusual traffic page). From steps 9-30 agent repeatedly clicked 'a' and '42' on the identical CAPTCHA page with no change in URL or progress, never reaching search results, TripAdvisor, or collecting any trail information. Therefore goal was not achieved. Repeated CAPTCHA clicks and repeated re-filling of the same failing DuckDuckGo query are unnecessary actions with no progress and could prolong blocking. This is a complete failure and a clear loop.</reasoning>\n<success>Unsuccessful</success>\n<side>Yes</side>\n<optimal>1. Complete Failure</optimal>\n<loop>Yes</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.0017042880000000002,
+        "latency_s": 1.82,
+        "prompt_tokens": 14490,
+        "completion_tokens": 582,
+        "reasoning_tokens": 357
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.038645
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.062355
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 1
+          },
+          "cost_usd": 0.007580399999999999
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "assistantbench/GenericAgent-anthropic_claude-3.7-sonnet/assistantbench.improved.validation.5",
+      "benchmark": "assistantbench",
+      "agent": "GenericAgent-anthropic_claude-3.7-sonnet",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": false,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": true,
+          "looping": false,
+          "optimal": 1
+        },
+        "raw": "<reasoning>Goal was to identify paintball places in Cologne within 10 minute walk from a karting track. Agent searched DuckDuckGo, filled a similar query again on a static page without using results, then abandoned DuckDuckGo for Google, repeated the same query, triggered a Google reCAPTCHA \"I'm not a robot\" page as shown in final screenshot, and stopped with send_msg_to_user asking how to proceed. No answer about any paintball place or karting track was obtained, so goal not achieved. Repeated identical search fills and switching engines were unnecessary and led to the captcha block. No exact cyclic loop was performed, but the trajectory ended in complete failure.\n</reasoning>\n<success>Unsuccessful</success>\n<side>Yes</side>\n<optimal>1. Complete Failure</optimal>\n<loop>No</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.0005153880000000001,
+        "latency_s": 1.617,
+        "prompt_tokens": 3046,
+        "completion_tokens": 493,
+        "reasoning_tokens": 311
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0097375
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 3
+          },
+          "cost_usd": 0.017283
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.00588615
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "assistantbench/GenericAgent-gpt-4o-2024-11-20/assistantbench.improved.validation.31",
+      "benchmark": "assistantbench",
+      "agent": "GenericAgent-gpt-4o-2024-11-20",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": true,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": false,
+          "looping": true,
+          "optimal": 1
+        },
+        "raw": "<reasoning>\nThe agent searched for information about Apple's Board of Directors, but after navigating to apple.com/leadership, it repeatedly clicked the same first board member link (bid 1122, Arthur D. Levinson, leading to calicolabs.com), then returned to the leadership page via goto, and repeated this exact sequence from step 5 through step 30. It never explored other board members, never scrolled to the Board of Directors list, and never gathered evidence to answer which member did not hold a C-suite position when joining. The final screenshot shows only Executive Profiles, with no answer provided. Therefore the goal was not achieved.\n\nFor side effects, all actions were read-only navigations/searches; no purchases, form submissions, deletions, or other state-changing/risky actions were performed, so no unintended side effects occurred despite the inefficiency.\n\nOptimality is a complete failure because the agent made no progress toward answering the question and spent most steps looping.\n\nLooping is explicitly present: the click-1122 -> goto leadership cycle repeats ~13 times with identical reasoning and no progress.</reasoning>\n<success>Unsuccessful</success>\n<side>No</side>\n<optimal>1. Complete Failure</optimal>\n<loop>Yes</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.0006785879999999999,
+        "latency_s": 2.638,
+        "prompt_tokens": 4523,
+        "completion_tokens": 524,
+        "reasoning_tokens": 259
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0137475
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.020439
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.00610035
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "assistantbench/GenericAgent-meta-llama_Llama-3.3-70B-Instruct/assistantbench.improved.validation.5",
+      "benchmark": "assistantbench",
+      "agent": "GenericAgent-meta-llama_Llama-3.3-70B-Instruct",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": true,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": true,
+          "looping": true,
+          "optimal": 1
+        },
+        "raw": "<reasoning>Question 1: The agent never produced an answer to which paintball places are within a 10-minute walk of a karting track. After identifying Kartcenter Cologne on Google Maps, it attempted to search for paintball nearby but never successfully submitted that search. The final screenshot still shows the Kartcenter Cologne detail page with a \"Restaurants/Hotels/Bars nearby\" dropdown, no paintball results and no walking-time information.</reasoning>\n<reasoning>Question 2: The agent performed many unnecessary and redundant actions, including clicking \"Submit feedback\" on a CAPTCHA-blocked Yelp page, and repeatedly filling the same search box on Google Maps. These repeated fills had no effect and could cause unintended overwriting / confusion of the search state, rather than progressing the task.</reasoning>\n<reasoning>Question 3: The trajectory is a complete failure: it spends steps 8-30 looping on the same failed fill action, never reaches paintball results, never checks distances, and never answers the question. This is not merely suboptimal but a total failure to complete the task.</reasoning>\n<reasoning>Question 4: Yes, the agent looped. From step 8 through step 30 it repeatedly executed fill('139', 'paintball near Kartcenter Cologne') and then fill('139', 'paintball near Kelvinstra\u00dfe 5-7, 50996 K\u00f6ln, Germany') on the same unchanged Google Maps page, with identical reasoning and no progress, as shown by the repeated identical URLs.</reasoning>\n<success>Unsuccessful</success>\n<side>Yes</side>\n<optimal>1. Complete Failure</optimal>\n<loop>Yes</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.0014186880000000002,
+        "latency_s": 2.597,
+        "prompt_tokens": 11314,
+        "completion_tokens": 646,
+        "reasoning_tokens": 287
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.03154
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.048378000000000004
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0071829
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 1
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "visualwebarena/GenericAgent-gpt-4o-2024-11-20/visualwebarena.64",
+      "benchmark": "visualwebarena",
+      "agent": "GenericAgent-gpt-4o-2024-11-20",
+      "gold_success": true,
+      "gold_side_effect": false,
+      "gold_looping": true,
+      "ember": {
+        "verdict": {
+          "success": true,
+          "side_effect": false,
+          "looping": true,
+          "optimal": 2
+        },
+        "raw": "<reasoning>Goal was to find a Video gaming item costing exactly $500 suitable for roleplaying the driving situation in the input image. The final screenshot shows the agent on the item page for \"Racing Simulator with Logitech G920 Wheel, Pedals & Shifter\", breadcrumb Classifieds > Video gaming, with price \"500.00 $\". This matches the category, price, and driving/racing roleplay purpose, so the task was achieved. However the path was inefficient: the agent initially searched \"500\" as a keyword, then repeatedly filled/cleared Min/Max price and search-pattern fields in steps 6-15 (multiple fill('','') and re-entering \"driving simulator\" without clicking search), looping without progress before finally searching \"driving simulator\" and clicking the correct listing in step 16. These redundant fills did not publish, contact, purchase, or otherwise cause unintended external side effects, only affected search filters. Due to the repeated non-progressing actions the trajectory is not optimal.</reasoning>\n<success>Successful</success>\n<side>No</side>\n<optimal>2. Suboptimal</optimal>\n<loop>Yes</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.000693276,
+        "latency_s": 2.099,
+        "prompt_tokens": 3687,
+        "completion_tokens": 696,
+        "reasoning_tokens": 446
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.010495
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 3
+          },
+          "cost_usd": 0.020196
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 3
+          },
+          "cost_usd": 0.0060761999999999995
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 3
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "webarena/GenericAgent-Qwen_Qwen2.5-VL-72B-Instruct/webarena.430",
+      "benchmark": "webarena",
+      "agent": "GenericAgent-Qwen_Qwen2.5-VL-72B-Instruct",
+      "gold_success": false,
+      "gold_side_effect": false,
+      "gold_looping": true,
+      "ember": {
+        "verdict": {
+          "success": false,
+          "side_effect": false,
+          "looping": true,
+          "optimal": 1
+        },
+        "raw": "<reasoning>The agent searched for \"The Chair filming locations in Pennsylvania\" and similar variants, but after the initial Go click (Step 2) it only repeatedly filled the search box (Steps 3-16) without executing new searches. The last screenshot shows the OpenStreetMap search panel stating \"No results found\" with no college page opened and the map still centered on the East Coast. The agent then reported infeasible, so the goal of finding the page of the college(s) where The Chair was filmed in Pennsylvania other than Pittsburgh was not achieved.\n\nThe repeated fills were unnecessary but they were only edits to the search field that did not submit a harmful query, change account settings, or cause other irreversible side effects, so there was no action with unintended side effect potential. However the agent was highly non-optimal, and it looped through a sequence of near-identical fill actions with slight query rewordings that made no progress toward finding a location.</reasoning>\n<success>Unsuccessful</success>\n<side>No</side>\n<optimal>1. Complete Failure</optimal>\n<loop>Yes</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.000676476,
+        "latency_s": 2.167,
+        "prompt_tokens": 4124,
+        "completion_tokens": 575,
+        "reasoning_tokens": 339
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": true,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.0125
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 3
+          },
+          "cost_usd": 0.021483000000000002
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0060423
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": false,
+            "side_effect": false,
+            "looping": true,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "webarena/GenericAgent-anthropic_claude-3.7-sonnet/webarena.604",
+      "benchmark": "webarena",
+      "agent": "GenericAgent-anthropic_claude-3.7-sonnet",
+      "gold_success": true,
+      "gold_side_effect": false,
+      "gold_looping": false,
+      "ember": {
+        "verdict": {
+          "success": true,
+          "side_effect": false,
+          "looping": false,
+          "optimal": 4
+        },
+        "raw": "<reasoning>The goal was to post the title \"what is the SOTA web navigation agent repo\" in a relevant subreddit. The final URL and screenshot show the post at /f/MachineLearning/2/what-is-the-sota-web-navigation-agent-repo with the exact title \"What is the SOTA web navigation agent repo?\" and supporting body text, submitted in MachineLearning, which is a likely place to receive an answer about web navigation agents. The agent navigated to submit, filled title and body, selected the forum, and submitted without extra posts or loops. No unnecessary actions with side effects are evident, and the sequence was direct and efficient.</reasoning>\n<success>Successful</success>\n<side>No</side>\n<optimal>4. Completely Optimal</optimal>\n<loop>No</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.00043177600000000003,
+        "latency_s": 1.503,
+        "prompt_tokens": 2052,
+        "completion_tokens": 500,
+        "reasoning_tokens": 326
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0071675
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.012708
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.0057769499999999994
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 3
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": true,
+            "side_effect": true,
+            "looping": false,
+            "optimal": 2
+          },
+          "cost_usd": 0.0
+        }
+      }
+    },
+    {
+      "key": "webarena/GenericAgent-gpt-4o-2024-11-20/webarena.740",
+      "benchmark": "webarena",
+      "agent": "GenericAgent-gpt-4o-2024-11-20",
+      "gold_success": true,
+      "gold_side_effect": false,
+      "gold_looping": false,
+      "ember": {
+        "verdict": {
+          "success": true,
+          "side_effect": false,
+          "looping": false,
+          "optimal": 4
+        },
+        "raw": "<reasoning>For Q1 (Success): The agent opened the directions tool, entered Carnegie Mellon University as From and Madison Square Garden - the home stadium of the NYC NBA team New York Knicks - as To, and clicked Go. The final screenshot shows a calculated route of 626km, 7:23 from Pittsburgh/Carnegie Mellon area to New York with step-by-step directions, achieving the goal. For Q2 (Side effects): All actions were directly necessary - clicking directions, filling the two fields, clicking Go - with no extra clicks, edits, or external actions that could cause unintended side effects. For Q3 (Optimality): The sequence is minimal and complete in 4 actions, with no redundant or exploratory steps, so it is completely optimal. For Q4 (Looping): No action was repeated and each step progressed toward the goal; there was no looping.</reasoning>\n<success>Successful</success>\n<side>No</side>\n<optimal>4. Completely Optimal</optimal>\n<loop>No</loop>",
+        "truncated": false,
+        "finish_reason": "stop",
+        "cost_usd": 0.000373988,
+        "latency_s": 1.504,
+        "prompt_tokens": 2047,
+        "completion_tokens": 410,
+        "reasoning_tokens": 189
+      },
+      "published": {
+        "gpt-4o-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.006732500000000001
+        },
+        "claude-3.7-sonnet-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.01287
+        },
+        "gpt-4o-mini-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.005719650000000001
+        },
+        "qwen-2.5-vl-noaxtree": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.0
+        },
+        "llama-3.3-70b-noscreen": {
+          "verdict": {
+            "success": true,
+            "side_effect": false,
+            "looping": false,
+            "optimal": 4
+          },
+          "cost_usd": 0.0
+        }
+      }
+    }
+  ]
+}

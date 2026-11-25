@@ -1,0 +1,9 @@
+Agent Verdict Hackathon Prep.md
+.env
+__pycache__/
+*.pyc
+.pytest_cache/
+dry_run_log.jsonl
+results/dry_run_*/
+# AgentRewardBench data has no stated license: download it locally, never commit or redistribute it
+data/arb/
