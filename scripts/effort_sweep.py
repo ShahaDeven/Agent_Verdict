@@ -27,9 +27,10 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from agent_verdict import ember_cache  # noqa: E402
+from agent_verdict import arb_data  # noqa: E402
 from agent_verdict.arb_data import (COMPARISON_JUDGES, fetch_published_verdict, fetch_reference,  # noqa: E402
                                     load_runs, sample_runs)
-from agent_verdict.ember_judge import judge_many  # noqa: E402
+from agent_verdict.ember_judge import judge_many, judged_ok  # noqa: E402
 from agent_verdict.metrics import binary_scores, bootstrap_ci  # noqa: E402
 from ember_core.budget import DEFAULT_CAP_USD, Ledger  # noqa: E402
 from ember_core.ember import REPO_ROOT, EmberClient  # noqa: E402
@@ -76,6 +77,9 @@ def main() -> int:
                                   pool.map(lambda r, j=j: fetch_published_verdict(r, j, cache), sample)))
                      for j in REFERENCE_ROWS}
     have = [r for r in sample if inputs[r.key]]
+    if arb_data.FAILED:
+        print(f"WARNING: {len(arb_data.FAILED)} files could not be downloaded (e.g. {arb_data.FAILED[0]}). "
+              "Rerun the same command: finished downloads are cached and skipped.")
     print(f"Sample: {len(have)} {args.split} runs with prompts ({sum(r.success for r in have)} successful per experts); "
           "published verdicts: " + ", ".join(f"{j} {sum(v is not None for v in published[j].values())}" for j in REFERENCE_ROWS))
     if args.fetch_only:
@@ -123,7 +127,11 @@ def main() -> int:
 def report(args, have, efforts, results, source, published, ledger, stopped) -> str:
     # Compare efforts on the same runs: those every effort judged without truncation.
     done = [e for e in efforts if results.get(e)]
-    common = [r for r in have if all(results[e].get(r.key) and not results[e][r.key]["truncated"] for e in done)]
+    common = [r for r in have if all(judged_ok(results[e].get(r.key)) for e in done)]
+    blocked = sorted({r.key for e in done for r in have if (results[e].get(r.key) or {}).get("blocked")})
+    errored = sorted({r.key for e in done for r in have
+                      if (results[e].get(r.key) or {}).get("error") and not results[e][r.key].get("blocked")})
+    missing = sorted({r.key for e in done for r in have if not results[e].get(r.key)})
     gold = [r.success for r in common]
     md = []
     if args.dry_run:
@@ -131,6 +139,11 @@ def report(args, have, efforts, results, source, published, ledger, stopped) -> 
     md.append(f"# Effort comparison ({args.split} split, screenshots original size)\n")
     if stopped:
         md.append(f"**Stopped early by the budget cap (finished results kept):** {stopped[0]}\n")
+    if blocked or errored or missing:
+        md.append(f"**Excluded from every row:** {len(blocked)} runs blocked by Ember's content filter, "
+                  f"{len(errored)} with temporary API errors (rerun to retry), {len(missing)} not judged. "
+                  "Blocked runs: " + (", ".join(blocked[:10]) + (" ..." if len(blocked) > 10 else "")
+                                      if blocked else "none") + "\n")
     md.append(f"All rows are scored on the same {len(common)} runs ({sum(gold)} successful per experts). "
               "Brackets are 95% bootstrap confidence intervals: with this few runs, overlapping intervals "
               "mean the difference may be noise.\n")

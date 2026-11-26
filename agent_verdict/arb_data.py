@@ -17,8 +17,10 @@ from __future__ import annotations
 
 import csv
 import json
+import os
 import random
 import re
+import threading
 import time
 from collections import defaultdict
 from dataclasses import dataclass
@@ -130,24 +132,66 @@ def _candidates(run: Run, judge: str) -> list[str]:
     return [f"{HF}/judgments/{run.benchmark}/{run.agent}/{judge}/{t}.json" for t in ids]
 
 
-def _get(url: str, byte_range: int | None = None) -> requests.Response | None:
+class DownloadError(RuntimeError):
+    pass
+
+
+# Hugging Face allows anonymous clients 3,000 file requests per 5-minute window ("RateLimit-Policy:
+# fixed window; q=3000; w=300"). We stay under it with a shared pacer (~8 requests/s) and, if a 429
+# still arrives, wait until the window resets (its "t=" seconds, or Retry-After). An HF_TOKEN env var,
+# if set, is sent for the higher logged-in limit.
+_MIN_INTERVAL = 0.125
+_pace_lock = threading.Lock()
+_next_slot = [0.0]
+FAILED: list[str] = []  # URLs that still failed after all retries (callers report these)
+
+
+def _pace() -> None:
+    with _pace_lock:
+        now = time.monotonic()
+        wait = _next_slot[0] - now
+        _next_slot[0] = max(now, _next_slot[0]) + _MIN_INTERVAL
+    if wait > 0:
+        time.sleep(wait)
+
+
+def _reset_wait(r: requests.Response, attempt: int) -> float:
+    m = re.search(r"\bt=(\d+)", r.headers.get("RateLimit", ""))
+    if m:
+        return int(m.group(1)) + 2
+    try:
+        return float(r.headers.get("Retry-After")) + 1
+    except (TypeError, ValueError):
+        return min(5 * 2 ** attempt, 120)
+
+
+def _get(url: str, byte_range: int | None = None, attempts: int = 8) -> requests.Response | None:
     headers = {"User-Agent": USER_AGENT}
+    token = os.environ.get("HF_TOKEN")
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
     if byte_range:
         headers["Range"] = f"bytes=0-{byte_range - 1}"
-    for attempt in range(4):
+    for attempt in range(attempts):
+        _pace()
         try:
             r = requests.get(url, headers=headers, timeout=60)
         except (requests.ConnectionError, requests.Timeout):
-            time.sleep(2 * 2 ** attempt)
+            time.sleep(min(3 * 2 ** attempt, 60))
             continue
         if r.status_code == 404:
             return None
-        if r.status_code in (429, 500, 502, 503, 504):
-            time.sleep(2 * 2 ** attempt)
+        if r.status_code == 429:
+            wait = _reset_wait(r, attempt)
+            print(f"  Hugging Face rate limit reached; waiting {wait:.0f}s for the window to reset...")
+            time.sleep(wait)
+            continue
+        if r.status_code in (500, 502, 503, 504):
+            time.sleep(min(3 * 2 ** attempt, 60))
             continue
         r.raise_for_status()
         return r
-    raise RuntimeError(f"failed to download {url}")
+    raise DownloadError(url)
 
 
 def fetch_reference(run: Run, cache: Path) -> dict | None:
@@ -156,7 +200,11 @@ def fetch_reference(run: Run, cache: Path) -> dict | None:
     if path.exists():
         return json.loads(path.read_text(encoding="utf-8"))
     for url in _candidates(run, REFERENCE_JUDGE):
-        r = _get(url)
+        try:
+            r = _get(url)
+        except DownloadError:
+            FAILED.append(url)
+            return None
         if r is not None:
             full = r.json()
             keep = {"messages": full["chat_messages"]["regular"], "goal": full.get("goal"),
@@ -179,7 +227,11 @@ def fetch_published_verdict(run: Run, judge: str, cache: Path) -> dict | None:
         return json.loads(path.read_text(encoding="utf-8"))
     for url in _candidates(run, judge):
         for size in (16_000, 64_000, None):
-            r = _get(url, size)
+            try:
+                r = _get(url, size)
+            except DownloadError:
+                FAILED.append(url)
+                return None
             if r is None:
                 break  # 404: try the next candidate id
             text = r.content.decode("utf-8", errors="replace")
@@ -222,3 +274,42 @@ def parse_verdict(text: str) -> dict:
     m = re.match(r"\s*(\d)", opt or "")
     return {"success": success, "side_effect": yn(side), "looping": yn(loop),
             "optimal": int(m.group(1)) if m else None}
+
+
+# ---------------------------------------------------------------- per-step screenshots
+
+def _screenshot_dirs(run: Run) -> list[str]:
+    ids = [run.task_id, run.task_id.replace("visualwebarena.resized.", "visualwebarena.")]
+    if run.benchmark == "assistantbench":
+        ids += [run.task_id.replace("assistantbench.validation", "assistantbench.improved.validation"),
+                run.task_id.replace("assistantbench.improved.validation", "assistantbench.validation")]
+    return list(dict.fromkeys(ids))
+
+
+def fetch_step_screenshot(run: Run, index: int, cache: Path) -> str | None:
+    """Page state `index` (0 = before Step 1) as a data URL. Stored as JPEG (quality 90) at the
+    ORIGINAL resolution: Ember's image tokens depend on resolution, not file format, and the
+    ~0.8 MB PNGs become ~0.15 MB. Returns None if the screenshot doesn't exist."""
+    import base64
+    import io
+
+    from PIL import Image
+
+    path = cache / "screens" / run.key / f"step_{index}.jpg"
+    if not path.exists():
+        raw = None
+        for task in _screenshot_dirs(run):
+            try:
+                r = _get(f"{HF}/screenshots/{run.benchmark}/{run.agent}/{task}/screenshot_step_{index}.png")
+            except DownloadError as e:
+                FAILED.append(str(e))
+                return None
+            if r is not None:
+                raw = r.content
+                break
+        if raw is None:
+            return None
+        img = Image.open(io.BytesIO(raw)).convert("RGB")
+        path.parent.mkdir(parents=True, exist_ok=True)
+        img.save(path, format="JPEG", quality=90)
+    return "data:image/jpeg;base64," + base64.b64encode(path.read_bytes()).decode()

@@ -16,9 +16,18 @@ def _path(root: Path, effort: str, long_side: int, key: str) -> Path:
     return root / f"{effort}_{long_side or 0}" / f"{key}.json"
 
 
+def _retryable(res: dict) -> bool:
+    """A temporary failure (API error, unparseable answer): never served from the cache, so a rerun
+    retries it. Content-filter blocks are permanent and stay cached."""
+    return bool(res.get("error")) and not res.get("blocked")
+
+
 def load(root: Path, effort: str, long_side: int, key: str) -> dict | None:
     p = _path(root, effort, long_side, key)
-    return json.loads(p.read_text(encoding="utf-8")) if p.exists() else None
+    if not p.exists():
+        return None
+    res = json.loads(p.read_text(encoding="utf-8"))
+    return None if _retryable(res) else res
 
 
 def save(root: Path, effort: str, long_side: int, key: str, result: dict) -> None:
@@ -48,7 +57,8 @@ def ingest_reports(results_dir: Path, root: Path) -> int:
             # judge_probe stores one result; effort_sweep stores {effort: result}
             per_effort = {args.get("effort"): ember} if "verdict" in ember else ember
             for effort, res in per_effort.items():
-                if effort and res and "verdict" in res and load(root, effort, long_side, run["key"]) is None:
+                if (effort and res and "verdict" in res and not _retryable(res)
+                        and load(root, effort, long_side, run["key"]) is None):
                     save(root, effort, long_side, run["key"], res)
                     added += 1
     return added

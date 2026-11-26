@@ -79,6 +79,14 @@ def test_load_runs_majority_and_ties(tmp_path):
     assert [r.task_id for r in sample_runs(runs, "dev", 5)] == ["wa.1"]
 
 
+def test_rate_limit_wait_reads_huggingface_headers():
+    from types import SimpleNamespace as NS
+    from agent_verdict.arb_data import _reset_wait
+    assert _reset_wait(NS(headers={"RateLimit": '"resolvers";r=0;t=283'}), 0) == 285
+    assert _reset_wait(NS(headers={"Retry-After": "10"}), 0) == 11
+    assert _reset_wait(NS(headers={}), 2) == 20
+
+
 def test_split_key_maps_renamed_benchmark_ids():
     from agent_verdict.arb_data import _split_key
     assert _split_key("visualwebarena.resized.102") == "visualwebarena.102"

@@ -30,10 +30,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from ember_core.budget import DEFAULT_CAP_USD, Ledger  # noqa: E402
 from ember_core.ember import REPO_ROOT, EmberClient  # noqa: E402
+from agent_verdict import arb_data  # noqa: E402
 from agent_verdict.arb_data import (COMPARISON_JUDGES, fetch_published_verdict, fetch_reference,  # noqa: E402
                             load_runs, sample_runs)
 from agent_verdict import ember_cache  # noqa: E402
-from agent_verdict.ember_judge import judge_many  # noqa: E402
+from agent_verdict.ember_judge import judge_many, judged_ok  # noqa: E402
 from agent_verdict.metrics import binary_scores  # noqa: E402
 
 DATA = REPO_ROOT / "data" / "arb"
@@ -80,6 +81,9 @@ def main() -> int:
                                   pool.map(lambda r, j=j: fetch_published_verdict(r, j, cache), sample)))
                      for j in judges}
     have = [r for r in sample if inputs[r.key]]
+    if arb_data.FAILED:
+        print(f"WARNING: {len(arb_data.FAILED)} files could not be downloaded (e.g. {arb_data.FAILED[0]}). "
+              "Rerun the same command: finished downloads are cached and skipped.")
     print(f"Prompts available for {len(have)}/{len(sample)} runs; published verdicts: "
           + ", ".join(f"{j} {sum(v is not None for v in published[j].values())}" for j in judges))
     if args.fetch_only:
@@ -118,7 +122,9 @@ def main() -> int:
 
 
 def report(args, sample, have, inputs, published, ember, judges, ledger, stopped) -> str:
-    judged = [r for r in have if ember.get(r.key) and not ember[r.key]["truncated"]]
+    judged = [r for r in have if judged_ok(ember.get(r.key))]
+    blocked = sum(1 for r in have if (ember.get(r.key) or {}).get("blocked"))
+    errored = sum(1 for r in have if (ember.get(r.key) or {}).get("error")) - blocked
     md = []
     if args.dry_run:
         md.append("> **DRY RUN.** Mock Ember always answers the first choice; numbers are not measurements.\n")
@@ -127,7 +133,8 @@ def report(args, sample, have, inputs, published, ember, judges, ledger, stopped
     if stopped:
         md.append(f"**Stopped early by the budget cap (finished results kept):** {stopped[0]}\n")
     trunc = sum(1 for r in have if ember.get(r.key) and ember[r.key]["truncated"])
-    md.append(f"{len(judged)} runs judged by Ember ({trunc} truncated, excluded). Expert labels: "
+    md.append(f"{len(judged)} runs judged by Ember ({trunc} truncated, {blocked} blocked by the content filter, "
+              f"{errored} API errors; all excluded). Expert labels: "
               f"{sum(r.success for r in judged)} successful, {sum(not r.success for r in judged)} unsuccessful. "
               "Every judge below is scored on the same runs it has a verdict for, against the same expert labels, "
               "with the same prompt (goal, actions, agent reasoning, final screenshot).\n")

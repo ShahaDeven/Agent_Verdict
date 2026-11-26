@@ -28,6 +28,30 @@ The probe:
 
 Results are written to `results/judge_probe_<timestamp>/report.md`.
 
+## Reproduce the headline (no API calls)
+
+```powershell
+python scripts\compare_judges.py   # Ember vs the five published judges on the test split, with paired-bootstrap intervals
+```
+
+## Verdict v2
+
+Verdict v2 is Agent Verdict's own judge. It returns a strict JSON verdict with:
+
+- success, and whether the agent *claimed* success
+- the failure type
+- the step and screenshot that prove it, with a short quote
+- side effects (tightly defined) and looping
+- a confidence level and a needs-a-person flag
+
+It sees four screenshots per run: the final page, the two states just before it, and one from the middle.
+
+```powershell
+python scripts\verdict_v2_eval.py --fetch-only   # download screenshots ($0)
+python scripts\verdict_v2_eval.py --dry-run      # mock Ember ($0)
+python scripts\verdict_v2_eval.py                # 60 dev runs vs the v1 judge, stops itself at $0.25
+```
+
 ## Spending safeguards
 
 - Every Ember call is logged to `usage_log.jsonl`, with its tokens, cost and stop reason. That file is the proof of usage for the submission.

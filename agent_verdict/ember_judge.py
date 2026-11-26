@@ -35,9 +35,13 @@ def _shrink_images(messages: list[dict], long_side: int) -> list[dict]:
 
 
 def judge_many(client: EmberClient, runs: list, inputs: dict, *, effort: str, long_side: int = 0,
-               workers: int = 6, cache_root=None) -> tuple[dict, list[str], int]:
+               workers: int = 6, cache_root=None, judge_fn=None, variant: str | None = None
+               ) -> tuple[dict, list[str], int]:
     """Judge runs in parallel, reusing cached verdicts (never for dry runs). If the budget cap
     trips, finished results are kept and the rest skipped.
+
+    judge_fn(run) -> result overrides the default v1 judge (the benchmark prompt); variant names the
+    cache folder for it (e.g. "v2-minimal-f4"), so different judges never share cached verdicts.
     Returns ({run_key: result}, [stop reason], number taken from cache)."""
     from concurrent.futures import ThreadPoolExecutor
 
@@ -46,10 +50,15 @@ def judge_many(client: EmberClient, runs: list, inputs: dict, *, effort: str, lo
     from . import ember_cache
 
     use_cache = cache_root is not None and not client.dry_run
+    slot = variant or effort
+    if judge_fn is None:
+        def judge_fn(r):
+            return judge_run(client, inputs[r.key]["messages"], effort=effort, run_key=r.key,
+                             long_side=long_side)
     out: dict = {}
     todo = []
     for r in runs:
-        hit = ember_cache.load(cache_root, effort, long_side, r.key) if use_cache else None
+        hit = ember_cache.load(cache_root, slot, long_side, r.key) if use_cache else None
         if hit is not None:
             out[r.key] = hit
         else:
@@ -61,18 +70,39 @@ def judge_many(client: EmberClient, runs: list, inputs: dict, *, effort: str, lo
         if stopped:
             return r.key, None
         try:
-            res = judge_run(client, inputs[r.key]["messages"], effort=effort, run_key=r.key,
-                            long_side=long_side)
+            res = judge_fn(r)
         except BudgetExceeded as e:
             stopped.append(str(e))
             return r.key, None
+        except Exception as e:  # one bad run must never sink the whole batch
+            res = error_result(e)
+            if not res["blocked"]:
+                return r.key, res  # transient: not cached, so a rerun retries it
+        if res.get("error") and not res.get("blocked"):
+            return r.key, res  # e.g. unparseable answer: don't cache, retry next time
         if use_cache:
-            ember_cache.save(cache_root, effort, long_side, r.key, res)
+            ember_cache.save(cache_root, slot, long_side, r.key, res)
         return r.key, res
 
     with ThreadPoolExecutor(workers) as pool:
         out.update({k: v for k, v in pool.map(do, todo) if v is not None})
     return out, stopped, from_cache
+
+
+def error_result(e: Exception) -> dict:
+    """A run Ember did not judge. Content-policy blocks are permanent (cached, reported, and excluded
+    from every judge's row); anything else is transient (not cached, retried on the next run)."""
+    msg = str(e)
+    blocked = "content_policy" in msg or "content management policy" in msg
+    return {"verdict": {"success": None, "side_effect": None, "looping": None, "optimal": None},
+            "raw": "", "truncated": False, "blocked": blocked, "error": msg[:300],
+            "finish_reason": "content_filter" if blocked else "error", "cost_usd": 0.0, "latency_s": 0.0,
+            "prompt_tokens": 0, "completion_tokens": 0, "reasoning_tokens": 0}
+
+
+def judged_ok(res: dict | None) -> bool:
+    """True when Ember produced a usable verdict (not missing, truncated, blocked or errored)."""
+    return bool(res) and not res.get("truncated") and not res.get("error")
 
 
 def judge_run(client: EmberClient, messages: list[dict], *, effort: str, run_key: str,

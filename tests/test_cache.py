@@ -27,6 +27,21 @@ def test_ingest_reads_both_report_formats_and_skips_dry_runs(tmp_path):
     assert ember_cache.ingest_reports(results, root) == 0  # idempotent
 
 
+ERR = {"verdict": {"success": None}, "error": "Error code: 503", "blocked": False}
+BLOCKED = {"verdict": {"success": None}, "error": "content_policy_violation", "blocked": True}
+
+
+def test_temporary_errors_are_never_served_or_imported(tmp_path):
+    results, root = tmp_path / "results", tmp_path / "cache"
+    _report(results / "effort_sweep_1", {"dry_run": False},
+            [{"key": "k/err", "ember": {"minimal": ERR}}, {"key": "k/blk", "ember": {"minimal": BLOCKED}}])
+    assert ember_cache.ingest_reports(results, root) == 1  # only the block is imported
+    assert ember_cache.load(root, "minimal", 0, "k/err") is None
+    assert ember_cache.load(root, "minimal", 0, "k/blk")["blocked"] is True
+    ember_cache.save(root, "minimal", 0, "k/old", ERR)  # an error cached by the earlier bug
+    assert ember_cache.load(root, "minimal", 0, "k/old") is None  # treated as missing, so it's retried
+
+
 class _CountingClient:
     dry_run = False
 
@@ -48,6 +63,25 @@ def test_judge_many_uses_cache_and_only_pays_for_missing(tmp_path, monkeypatch):
     out, stopped, hits = ember_judge.judge_many(client, runs, inputs, effort="low", cache_root=root)
     assert hits == 1 and client.calls == 1 and out["k1"]["raw"] == "x" and out["k2"]["raw"] == "new"
     assert ember_cache.load(root, "low", 0, "k2")["raw"] == "new" and not stopped
+
+
+def test_content_filter_block_is_cached_but_transient_error_is_not(tmp_path, monkeypatch):
+    root = tmp_path / "cache"
+    client = _CountingClient()
+
+    def boom(c, messages, run_key, **kw):
+        if run_key == "blocked":
+            raise RuntimeError("Error code: 400 - {'error': {'code': 'content_policy_violation'}}")
+        raise RuntimeError("Error code: 503 - service unavailable")
+    monkeypatch.setattr(ember_judge, "judge_run", boom)
+    runs = [NS(key="blocked"), NS(key="flaky")]
+    out, stopped, _ = ember_judge.judge_many(client, runs, {"blocked": {"messages": []}, "flaky": {"messages": []}},
+                                             effort="minimal", cache_root=root)
+    assert out["blocked"]["blocked"] is True and out["flaky"]["blocked"] is False and not stopped
+    assert ember_cache.load(root, "minimal", 0, "blocked")["blocked"] is True
+    assert ember_cache.load(root, "minimal", 0, "flaky") is None
+    assert not ember_judge.judged_ok(out["blocked"]) and not ember_judge.judged_ok(out["flaky"])
+    assert ember_judge.judged_ok(RES)
 
 
 def test_dry_run_never_reads_or_writes_cache(tmp_path, monkeypatch):

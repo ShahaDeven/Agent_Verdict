@@ -33,6 +33,30 @@ def bootstrap_ci(gold: list[bool], pred: list[bool | None], metric: str, n_boot:
     return lo, hi
 
 
+def paired_bootstrap(gold: list[bool], pred_a: list[bool | None], pred_b: list[bool | None],
+                     metric: str, n_boot: int = 2000, seed: int = 0) -> dict:
+    """Difference A - B on the same runs, with a 95% percentile bootstrap interval.
+    significant = the interval excludes zero."""
+    rng = random.Random(seed)
+    n = len(gold)
+    point_a = binary_scores(gold, pred_a)[metric]
+    point_b = binary_scores(gold, pred_b)[metric]
+    diffs = []
+    for _ in range(n_boot):
+        pick = [rng.randrange(n) for _ in range(n)]
+        g = [gold[i] for i in pick]
+        a = binary_scores(g, [pred_a[i] for i in pick])[metric]
+        b = binary_scores(g, [pred_b[i] for i in pick])[metric]
+        if a is not None and b is not None:
+            diffs.append(a - b)
+    diffs.sort()
+    lo = diffs[int(0.025 * (len(diffs) - 1))] if diffs else None
+    hi = diffs[int(0.975 * (len(diffs) - 1))] if diffs else None
+    diff = None if point_a is None or point_b is None else point_a - point_b
+    return {"a": point_a, "b": point_b, "diff": diff, "lo": lo, "hi": hi,
+            "significant": lo is not None and (lo > 0 or hi < 0)}
+
+
 def binary_scores(gold: list[bool], pred: list[bool | None]) -> dict:
     pairs = [(g, p) for g, p in zip(gold, pred) if p is not None]
     tp = sum(g and p for g, p in pairs)
