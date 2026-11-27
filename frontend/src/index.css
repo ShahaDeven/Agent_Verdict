@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+/* Agent Verdict: race-control paper. Light only; black rules; flag colours carry meaning and always
+   come with a word. */
+@theme {
+  --color-paper: #F7F6F2;
+  --color-paper-2: #ECEBE6;
+  --color-card: #FFFFFF;
+  --color-ink: #121417;
+  --color-ink-2: #2E3238;
+  --color-ink-3: #4A4F57;
+  --color-rule: #C9C5BB;
+  --color-flag-yellow: #F5C518;
+  --color-flag-red: #C8232B;
+  --color-flag-blue: #1F55E0;
+  --color-flag-green: #12784A;
+
+  --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-sans: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+html, body { background: var(--color-paper); color: var(--color-ink); }
+body { margin: 0; font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+:focus-visible { outline: 3px solid var(--color-ink); outline-offset: 3px; }
+button { cursor: pointer; }
+button:disabled { cursor: default; }
+
+.checker {
+  background: repeating-conic-gradient(var(--color-ink) 0 25%, var(--color-paper) 0 50%) 0 0 / 50% 50%;
+}

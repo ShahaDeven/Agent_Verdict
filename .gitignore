@@ -7,3 +7,8 @@ dry_run_log.jsonl
 results/dry_run_*/
 # AgentRewardBench data has no stated license: download it locally, never commit or redistribute it
 data/arb/
+# per-run reports carry the experts' labels for every run; only the summary report.md is committed
+results/*/report.json
+# local review-queue database and imported screenshots
+data/app/
+*.egg-info/
