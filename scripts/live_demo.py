@@ -39,7 +39,7 @@ from ember_core.ember import REPO_ROOT  # noqa: E402
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--tasks", default="all", help="comma-separated task ids, or 'all', 'standard' (30) or 'hard' (6)")
+    ap.add_argument("--tasks", default="all", help="comma-separated task ids, or all | standard (30) | hard (6) | visual (5) | forms (3)")
     ap.add_argument("--attempts", type=int, default=1)
     ap.add_argument("--max-usd", type=float, default=0.10, help="spend cap for this script run (agent + judge)")
     ap.add_argument("--max-steps", type=int, default=15)
@@ -53,8 +53,10 @@ def main() -> int:
 
     if args.tasks == "all":
         tasks = TASKS
-    elif args.tasks in ("hard", "standard"):
-        tasks = [t for t in TASKS if ("hard" in t.tags) == (args.tasks == "hard")]
+    elif args.tasks == "standard":
+        tasks = [t for t in TASKS if not {"hard", "visual", "forms"} & set(t.tags)]
+    elif args.tasks in ("hard", "visual", "forms"):
+        tasks = [t for t in TASKS if args.tasks in t.tags]
     else:
         tasks = [BY_ID[t.strip()] for t in args.tasks.split(",")]
     try:

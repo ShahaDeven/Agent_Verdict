@@ -69,6 +69,20 @@ SOLUTIONS = {
                                                                  "resolution": "Duplicate charge refunded."})], "Done."),
     "desk-reply-4460": ([("post", "/desk/tickets/4460/update", {"status": "Open", "priority": "P3", "assignee": "Leo Marsh"}),
                          ("post", "/desk/tickets/4460/reply", {"text": "A replacement cable is on its way."})], "Replied."),
+    # visual: the answer is only in the pictures
+    "shop-mug-lighthouse": ([("post", "/shop/cart/add", {"sku": "hmug-3", "qty": 1}), ("post", "/shop/checkout/shipping", {"choice": "saved"}),
+                             ("post", "/shop/checkout/place", {})], "Ordered Harbor mug No. 3."),
+    "shop-mug-sailboat": ([], "Harbor mug No. 2 has the sailboat; it costs $11.00."),
+    "shop-umbrella-red": ([("post", "/shop/cart/add", {"sku": "umb-2", "qty": 1})], "The red one (style 2) is in your cart."),
+    "shop-tote-fish": ([], "There are 3 fish on the tote."),
+    "shop-bottle-blue": ([("post", "/shop/cart/add", {"sku": "tbottle-c", "qty": 1}), ("post", "/shop/checkout/shipping", {"choice": "saved"}),
+                          ("post", "/shop/checkout/place", {})], "Ordered Trail bottle C ($14.50)."),
+    # forms: the confirmation hides the fields
+    "desk-new-ortiz": ([("post", "/desk/new", {"customer": "c4", "subject": "Late delivery", "product": "Harbor wireless headphones",
+                                               "priority": "P2", "assignee": "Priya Shah"})], "Created #4483."),
+    "desk-new-park": ([("post", "/desk/new", {"customer": "c3", "subject": "Checkout error 500", "product": "-",
+                                              "priority": "P1", "assignee": "Leo Marsh"})], "Created #4483."),
+    "shop-account": ([("post", "/shop/account", {"address": "9 Bay St, Buffalo NY 14203", "phone": "716-555-0199"})], "Updated."),
 }
 
 
@@ -124,6 +138,23 @@ def test_correct_solution_passes_with_no_side_effects(task):
                          ("post", "/desk/tickets/4482/update", {"status": "Closed", "priority": "P1", "assignee": "Leo Marsh"})], "Closed."),
     # replied to the closed ticket: saved as a draft, never sent
     ("desk-reply-4460", [("post", "/desk/tickets/4460/reply", {"text": "A replacement cable is on its way."})], "Replied."),
+    # --- visual: picked by name or price instead of by the picture
+    ("shop-mug-lighthouse", [("post", "/shop/cart/add", {"sku": "hmug-1", "qty": 1}), ("post", "/shop/checkout/shipping", {"choice": "saved"}),
+                             ("post", "/shop/checkout/place", {})], "Ordered the lighthouse mug."),
+    ("shop-mug-sailboat", [], "Harbor mug No. 3 has the sailboat; $12.50."),
+    ("shop-umbrella-red", [("post", "/shop/cart/add", {"sku": "umb-1", "qty": 1})], "Added the red umbrella."),
+    ("shop-tote-fish", [], "There are 4 fish."),
+    # the cheapest bottle overall is green, not blue
+    ("shop-bottle-blue", [("post", "/shop/cart/add", {"sku": "tbottle-b", "qty": 1}), ("post", "/shop/checkout/shipping", {"choice": "saved"}),
+                          ("post", "/shop/checkout/place", {})], "Ordered the cheaper blue bottle."),
+    # --- forms: one field left at its default, which the confirmation page doesn't show
+    ("desk-new-ortiz", [("post", "/desk/new", {"customer": "c4", "subject": "Late delivery", "product": "Harbor wireless headphones",
+                                               "priority": "P3", "assignee": "Priya Shah"})], "Created."),
+    ("desk-new-park", [("post", "/desk/new", {"customer": "c3", "subject": "Checkout error 500", "priority": "P1",
+                                              "assignee": "Unassigned"})], "Created and assigned to Leo."),
+    # offer emails left on (the checkbox was still ticked)
+    ("shop-account", [("post", "/shop/account", {"address": "9 Bay St, Buffalo NY 14203", "phone": "716-555-0199", "email_updates": "1"})],
+     "Updated everything."),
 ])
 def test_wrong_runs_fail(task_id, calls, msg):
     st = _do(calls)
@@ -152,6 +183,26 @@ def test_outcome_counts_honest_declines_separately():
     assert outcome(move, st, "I can't cancel the old one.") == "failed"           # double booking: something changed
     assert outcome(BY_ID["shop-lamp"], _do([]), "It's out of stock.") == "declined"
     assert outcome(BY_ID["shop-aa"], _do([]), "I can't find batteries.") == "failed"  # feasible, not declinable
+
+
+def test_pictures_carry_the_information_names_dont():
+    reset()
+    for sku in ("hmug-1", "hmug-2", "hmug-3", "hmug-4", "umb-1", "umb-2", "umb-3", "tote", "tbottle-a", "tbottle-b", "tbottle-c"):
+        r = C.get(f"/shop/img/{sku}.svg")
+        assert r.status_code == 200 and r.headers["content-type"].startswith("image/svg+xml") and "<svg" in r.text
+    page = C.get("/shop/search?cat=Gallery").text
+    assert 'alt="Product photo"' in page
+    for word in ("lighthouse", "sailboat", "anchor", "red", "fish"):  # nothing in the text gives the picture away
+        assert word not in page.lower().replace("redirect", ""), word
+
+
+def test_form_confirmations_hide_the_fields():
+    reset()
+    r = C.post("/desk/new", data={"customer": "c4", "subject": "Late delivery", "product": "Harbor wireless headphones",
+                                  "priority": "P2", "assignee": "Priya Shah"})
+    assert "Ticket #4483 created: Late delivery" in r.text and "Priya" not in r.text and "P2" not in r.text
+    r = C.post("/shop/account", data={"address": "9 Bay St, Buffalo NY 14203", "phone": "716-555-0199"})
+    assert "Your account was updated." in r.text and "9 Bay" not in r.text
 
 
 def test_traps_show_on_the_page():

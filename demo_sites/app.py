@@ -36,6 +36,18 @@ SEED = {
             "mug-blue": {"name": "Lake mug, blue", "price": 9.50, "stock": 25, "cat": "Kitchen"},
             "mug-red": {"name": "Lake mug, red", "price": 9.50, "stock": 25, "cat": "Kitchen"},
             "mug-green": {"name": "Lake mug, green", "price": 9.50, "stock": 1, "cat": "Kitchen"},
+            # Visual products: the name doesn't say what's on the picture, so only looking tells them apart.
+            "hmug-1": {"name": "Harbor mug No. 1", "price": 12.00, "stock": 10, "cat": "Gallery", "img": "mug-anchor"},
+            "hmug-2": {"name": "Harbor mug No. 2", "price": 11.00, "stock": 10, "cat": "Gallery", "img": "mug-sailboat"},
+            "hmug-3": {"name": "Harbor mug No. 3", "price": 12.50, "stock": 10, "cat": "Gallery", "img": "mug-lighthouse"},
+            "hmug-4": {"name": "Harbor mug No. 4", "price": 10.50, "stock": 10, "cat": "Gallery", "img": "mug-fish"},
+            "umb-1": {"name": "Shore umbrella, style 1", "price": 18.00, "stock": 8, "cat": "Gallery", "img": "umbrella-blue"},
+            "umb-2": {"name": "Shore umbrella, style 2", "price": 18.00, "stock": 8, "cat": "Gallery", "img": "umbrella-red"},
+            "umb-3": {"name": "Shore umbrella, style 3", "price": 18.00, "stock": 8, "cat": "Gallery", "img": "umbrella-yellow"},
+            "tote": {"name": "Harbor tote bag", "price": 15.00, "stock": 12, "cat": "Gallery", "img": "tote-3fish"},
+            "tbottle-a": {"name": "Trail bottle A", "price": 16.00, "stock": 9, "cat": "Gallery", "img": "bottle-blue"},
+            "tbottle-b": {"name": "Trail bottle B", "price": 13.50, "stock": 9, "cat": "Gallery", "img": "bottle-green"},
+            "tbottle-c": {"name": "Trail bottle C", "price": 14.50, "stock": 9, "cat": "Gallery", "img": "bottle-blue"},
             "bottle": {"name": "Steel water bottle, 750 ml", "price": 14.00, "stock": 30, "cat": "Kitchen"},
             "headphones": {"name": "Harbor wireless headphones", "price": 39.00, "stock": 7, "cat": "Audio"},
             "earbuds": {"name": "Harbor earbuds", "price": 24.00, "stock": 0, "cat": "Audio"},
@@ -48,6 +60,8 @@ SEED = {
              "address": "14 Elm St, Buffalo NY 14202", "total": 30.00, "date": "Nov 18, 2026"},
         ],
         "saved_address": "14 Elm St, Buffalo NY 14202",
+        "phone": "716-555-0100",
+        "email_updates": True,
         "next_order": 1043,
     },
     "bistro": {
@@ -109,9 +123,9 @@ app = FastAPI(title="Agent Verdict demo sites", docs_url=None, redoc_url=None)
 # ============================================================== page frame
 
 THEMES = {
-    "shop": ("Lakeshore Supply", "#0F4C5C", "#E36414", [("Shop", "/shop/"), ("Cart", "/shop/cart"), ("Orders", "/shop/orders")]),
+    "shop": ("Lakeshore Supply", "#0F4C5C", "#E36414", [("Shop", "/shop/"), ("Cart", "/shop/cart"), ("Orders", "/shop/orders"), ("Account", "/shop/account")]),
     "bistro": ("Harbor Bistro", "#3D2C2E", "#B08968", [("Menu", "/bistro/menu"), ("Reservations", "/bistro/reserve"), ("Manage booking", "/bistro/manage"), ("Hours", "/bistro/#hours")]),
-    "desk": ("Northpoint Help Desk", "#1D3557", "#457B9D", [("Tickets", "/desk/"), ("Knowledge base", "/desk/kb")]),
+    "desk": ("Northpoint Help Desk", "#1D3557", "#457B9D", [("Tickets", "/desk/"), ("New ticket", "/desk/new"), ("Knowledge base", "/desk/kb")]),
 }
 
 e = html.escape
@@ -143,6 +157,60 @@ def go(url: str) -> RedirectResponse:
 def money(x: float) -> str:
     return f"${x:,.2f}"
 
+# ============================================================== product pictures (drawn, so they're ours)
+
+def _mug(motif: str) -> str:
+    art = {
+        "anchor": '<g stroke="#1d3557" stroke-width="5" fill="none"><line x1="100" y1="78" x2="100" y2="150"/><circle cx="100" cy="72" r="8"/><line x1="82" y1="94" x2="118" y2="94"/><path d="M70 128 Q100 168 130 128"/></g>',
+        "sailboat": '<polygon points="100,62 100,132 140,132" fill="#f1faee" stroke="#1d3557" stroke-width="3"/><polygon points="94,74 94,132 66,132" fill="#e63946"/><path d="M60 138 L144 138 L132 156 L72 156 Z" fill="#6b4226"/>',
+        "lighthouse": '<polygon points="88,150 112,150 106,70 94,70" fill="#f1faee" stroke="#1d3557" stroke-width="2"/><rect x="90" y="88" width="20" height="10" fill="#e63946"/><rect x="88" y="116" width="24" height="10" fill="#e63946"/><rect x="92" y="58" width="16" height="12" fill="#ffd166"/><polygon points="90,58 110,58 100,46" fill="#1d3557"/>',
+        "fish": '<ellipse cx="96" cy="108" rx="30" ry="16" fill="#f4a261"/><polygon points="124,108 146,92 146,124" fill="#f4a261"/><circle cx="82" cy="104" r="4" fill="#1d3557"/>',
+    }[motif]
+    return (f'<rect x="40" y="40" width="120" height="130" rx="12" fill="#ffffff" stroke="#9aa5b1" stroke-width="3"/>'
+            f'<path d="M160 70 q40 0 40 35 q0 35 -40 35" fill="none" stroke="#9aa5b1" stroke-width="10"/>{art}')
+
+
+def _umbrella(color: str) -> str:
+    c = {"red": "#d62828", "blue": "#1d4ed8", "yellow": "#f2c14e"}[color]
+    return (f'<path d="M30 110 Q110 20 190 110 Z" fill="{c}"/><line x1="110" y1="110" x2="110" y2="175" stroke="#333" stroke-width="5"/>'
+            f'<path d="M110 175 q0 15 -14 15" fill="none" stroke="#333" stroke-width="5"/>')
+
+
+def _tote(n: int) -> str:
+    fish = "".join(f'<g transform="translate({60 + (i % 2) * 50},{95 + (i // 2) * 38})"><ellipse cx="0" cy="0" rx="16" ry="9" fill="#2a9d8f"/>'
+                   f'<polygon points="15,0 27,-9 27,9" fill="#2a9d8f"/></g>' for i in range(n))
+    return (f'<path d="M80 60 q30 -40 60 0" fill="none" stroke="#8d6e63" stroke-width="6"/>'
+            f'<rect x="40" y="60" width="140" height="130" rx="6" fill="#efe6d8" stroke="#8d6e63" stroke-width="3"/>{fish}')
+
+
+def _bottle(color: str) -> str:
+    c = {"blue": "#1d4ed8", "green": "#2a9d8f"}[color]
+    return (f'<rect x="85" y="30" width="50" height="22" rx="5" fill="#333"/>'
+            f'<rect x="70" y="52" width="80" height="140" rx="18" fill="{c}"/>')
+
+
+def svg(kind: str) -> str:
+    shape, _, arg = kind.partition("-")
+    body = {"mug": lambda: _mug(arg), "umbrella": lambda: _umbrella(arg), "tote": lambda: _tote(int(arg[0])),
+            "bottle": lambda: _bottle(arg)}[shape]()
+    return f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 210" width="220" height="210"><rect width="220" height="210" fill="#f6f7f9"/>{body}</svg>'
+
+
+@app.get("/shop/img/{sku}.svg")
+def shop_img(sku: str):
+    from fastapi.responses import Response
+    it = STATE["shop"]["products"].get(sku)
+    if not it or "img" not in it:
+        return Response(status_code=404)
+    return Response(svg(it["img"]), media_type="image/svg+xml")
+
+
+def _pic(sku: str, size: int) -> str:
+    it = STATE["shop"]["products"][sku]
+    # generic alt text on purpose (as on many real shops): the picture itself carries the information
+    return (f'<img src="/shop/img/{sku}.svg" alt="Product photo" width="{size}" height="{int(size * 210 / 220)}" '
+            f'style="display:block;border:1px solid #e2e5e8;border-radius:6px;margin:6px 0">') if "img" in it else ""
+
 # ============================================================== shop
 
 
@@ -153,7 +221,7 @@ def _shop_items(skus) -> str:
         it = p[sku]
         stock = ('<span style="color:#b42318">Out of stock</span>' if not it["stock"] else
                  '<span style="color:#b54708">Only 1 left</span>' if it["stock"] == 1 else '<span class="muted">In stock</span>')
-        cards.append(f'<div class="card"><a href="/shop/p/{sku}"><b>{e(it["name"])}</b></a><br>'
+        cards.append(f'<div class="card">{_pic(sku, 150)}<a href="/shop/p/{sku}"><b>{e(it["name"])}</b></a><br>'
                      f'<span class="price">{money(it["price"])}</span> · {stock}</div>')
     return f'<div class="grid">{"".join(cards)}</div>'
 
@@ -194,7 +262,7 @@ def shop_product(sku: str):
 <p><button type="submit">Add to cart</button></p></form>"""
     else:
         buy = '<p class="bad">Out of stock. We don\'t know when it will be back.</p><p><button disabled style="opacity:.5">Add to cart</button></p>'
-    return page("shop", it["name"], f"""<p class="muted">{e(it["cat"])}</p><h1>{e(it["name"])}</h1>
+    return page("shop", it["name"], f"""<p class="muted">{e(it["cat"])}</p><h1>{e(it["name"])}</h1>{_pic(sku, 260)}
 <p class="price" style="font-size:22px">{money(it["price"])}</p>{buy}""")
 
 
@@ -301,6 +369,31 @@ def shop_place():
                         "address": s["address"] or s["saved_address"], "total": total, "date": "Nov 28, 2026"})
     s["cart"], s["coupon"], s["address"] = {}, None, None
     return go(f"/shop/orders/{oid}")
+
+
+@app.get("/shop/account", response_class=HTMLResponse)
+def shop_account():
+    s = STATE["shop"]
+    return page("shop", "Account", f"""<h1>Your account</h1><form action="/shop/account" method="post">
+<label for="address">Saved address</label><input id="address" name="address" value="{e(s["saved_address"])}" style="width:380px">
+<label for="phone">Phone</label><input id="phone" name="phone" value="{e(s["phone"])}">
+<label><input type="checkbox" name="email_updates" value="1"{" checked" if s["email_updates"] else ""}> Email me about offers</label>
+<p><button type="submit">Save changes</button></p></form>""")
+
+
+@app.post("/shop/account")
+def shop_account_post(address: str = Form(""), phone: str = Form(""), email_updates: str = Form("")):
+    s = STATE["shop"]
+    if address.strip():
+        s["saved_address"] = address.strip()
+    s["phone"] = phone.strip()
+    s["email_updates"] = bool(email_updates)
+    return go("/shop/account/saved")
+
+
+@app.get("/shop/account/saved", response_class=HTMLResponse)
+def shop_account_saved():
+    return page("shop", "Account updated", '<p class="ok">Your account was updated.</p><p><a href="/shop/">Back to the shop</a></p>')
 
 
 @app.get("/shop/orders", response_class=HTMLResponse)
@@ -521,6 +614,48 @@ def desk_assign_me(tid: int):
     if t:
         t["assignee"] = STATE["desk"]["me"]
     return go(f"/desk/tickets/{tid}?msg=" + quote("Assigned to you."))
+
+
+PRODUCTS_FOR_TICKETS = ["-", "Harbor wireless headphones", "Harbor earbuds", "Kettle", "Mug", "USB-C cable", "Water bottle"]
+
+
+@app.get("/desk/new", response_class=HTMLResponse)
+def desk_new():
+    d = STATE["desk"]
+    custs = "".join(f'<option value="{cid}">{e(c["name"])}</option>' for cid, c in d["customers"].items())
+    prods = "".join(f"<option>{e(x)}</option>" for x in PRODUCTS_FOR_TICKETS)
+    agents = "".join(f"<option>{e(a)}</option>" for a in ["Unassigned"] + d["agents"])
+    return page("desk", "New ticket", f"""<h1>New ticket</h1><form action="/desk/new" method="post">
+<label for="customer">Customer</label><select id="customer" name="customer">{custs}</select>
+<label for="subject">Subject</label><input id="subject" name="subject" style="width:420px">
+<label for="product">Product</label><select id="product" name="product">{prods}</select>
+<label for="priority">Priority</label><select id="priority" name="priority"><option>P3</option><option>P2</option><option>P1</option></select>
+<label for="assignee">Assignee</label><select id="assignee" name="assignee">{agents}</select>
+<label for="description">Description</label><textarea id="description" name="description" rows="3" style="width:100%"></textarea>
+<p><button type="submit">Create ticket</button></p></form>""")
+
+
+@app.post("/desk/new")
+def desk_new_post(customer: str = Form(...), subject: str = Form(""), product: str = Form("-"), priority: str = Form("P3"),
+                  assignee: str = Form("Unassigned"), description: str = Form("")):
+    d = STATE["desk"]
+    if not subject.strip() or customer not in d["customers"]:
+        return go("/desk/new")
+    tid = max(int(t) for t in d["tickets"]) + 1
+    d["tickets"][tid] = {"subject": subject.strip(), "customer": customer, "status": "Open", "priority": priority,
+                         "assignee": "" if assignee == "Unassigned" else assignee, "product": product,
+                         "messages": [[d["customers"][customer]["name"], description.strip() or subject.strip()]]}
+    return go(f"/desk/created/{tid}")
+
+
+@app.get("/desk/created/{tid}", response_class=HTMLResponse)
+def desk_created(tid: int):
+    t = STATE["desk"]["tickets"].get(tid)
+    if not t:
+        return page("desk", "Not found", "<h1>Ticket not found</h1>")
+    # Like many help desks, the confirmation repeats only the subject. The other fields are on the ticket page.
+    return page("desk", "Ticket created", f'<p class="ok">Ticket #{tid} created: {e(t["subject"])}</p>'
+                                          f'<p><a href="/desk/">Back to tickets</a></p>')
 
 
 @app.get("/desk/customers/{cid}", response_class=HTMLResponse)

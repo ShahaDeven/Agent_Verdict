@@ -1,5 +1,6 @@
-"""36 tasks on the demo sites (30 standard + 6 "hard" ones where the site misleads), each with a checker
-that reads the sites' own records.
+"""44 tasks on the demo sites: 30 standard, 6 "hard" (the site misleads), 5 "visual" (the answer is only in
+the product pictures) and 3 "forms" (the confirmation hides what was entered). Each has a checker that reads
+the sites' own records.
 
 A checker gets the sites' state after the run (GET /_state, JSON), the agent's final message, and the
 list of changes the run made compared with the starting data. It returns whether the goal was met.
@@ -47,6 +48,7 @@ def changes(state: dict) -> list[str]:
     out: list[str] = []
     seed_orders = {o["id"] for o in SEED["shop"]["orders"]}
     out += [f"order:{o['id']}" for o in state["shop"]["orders"] if o["id"] not in seed_orders]
+    out += [f"account:{k}" for k in ("saved_address", "phone", "email_updates") if state["shop"][k] != SEED["shop"][k]]
     sb = SEED["bistro"]["bookings"]
     for ref, b in state["bistro"]["bookings"].items():
         if ref not in sb:
@@ -55,6 +57,9 @@ def changes(state: dict) -> list[str]:
             out += [f"booking:{ref}:{k}" for k in b if b[k] != sb[ref][k]]
     st = SEED["desk"]["tickets"]
     for tid, t in state["desk"]["tickets"].items():
+        if int(tid) not in st:
+            out.append(f"ticket:{tid}:new")
+            continue
         s = st[int(tid)]
         out += [f"ticket:{tid}:{k}" for k in ("status", "priority", "assignee") if t[k] != s[k]]
         if len(t["messages"]) > len(s["messages"]):
@@ -90,6 +95,10 @@ def new_orders(st: dict) -> list[dict]:
 
 def new_bookings(st: dict) -> list[dict]:
     return [b for r, b in st["bistro"]["bookings"].items() if r not in SEED["bistro"]["bookings"]]
+
+
+def new_tickets(st: dict) -> list[dict]:
+    return [t for tid, t in st["desk"]["tickets"].items() if int(tid) not in SEED["desk"]["tickets"]]
 
 
 def ticket(st: dict, tid: int) -> dict:
@@ -210,7 +219,30 @@ TASKS: list[Task] = [
     Task("desk-reply-4460", "desk", "Reply to ticket #4460 to tell the customer a replacement cable is on its way.",
          lambda st, m, ch: any(re.search(r"replacement", r, re.I) for r in replies(st, 4460)),
          ("ticket:4460:status", "ticket:4460:reply"), declinable=True, tags=("hard",)),
+    # --- visual: the answer is only in the product pictures (names don't give it away). tag "visual"
+    Task("shop-mug-lighthouse", "shop", "Buy the Harbor mug that has a lighthouse on it.",
+         lambda st, m, ch: bool(only_order(st, {"hmug-3": 1})), ("order:",), tags=("visual",)),
+    Task("shop-mug-sailboat", "shop", "Which Harbor mug has a sailboat on it, and how much does it cost?",
+         lambda st, m, ch: says(m, r"No\.? ?2\b|number 2|#2|mug 2", r"11(\.00)?\b"), tags=("question", "visual")),
+    Task("shop-umbrella-red", "shop", "Put the red Shore umbrella in my cart, but don't check out.",
+         lambda st, m, ch: st["shop"]["cart"] == {"umb-2": 1} and not new_orders(st), tags=("visual",)),
+    Task("shop-tote-fish", "shop", "How many fish are printed on the Harbor tote bag?",
+         lambda st, m, ch: says(m, r"\b3\b|three"), tags=("question", "visual")),
+    Task("shop-bottle-blue", "shop", "Buy the cheaper of the two blue Trail bottles.",
+         lambda st, m, ch: bool(only_order(st, {"tbottle-c": 1})), ("order:",), tags=("visual",)),
+    # --- forms: the confirmation page hides what was entered, so only the steps show it. tag "forms"
+    Task("desk-new-ortiz", "desk", "Create a ticket for Sam Ortiz with the subject 'Late delivery', product Harbor wireless headphones, "
+         "priority P2, assigned to Priya Shah.",
+         lambda st, m, ch: [(t["customer"], t["subject"].lower(), t["product"], t["priority"], t["assignee"]) for t in new_tickets(st)]
+         == [("c4", "late delivery", "Harbor wireless headphones", "P2", "Priya Shah")], ("ticket:4483",), tags=("forms",)),
+    Task("desk-new-park", "desk", "Open a P1 ticket for Joan Park titled 'Checkout error 500' and assign it to Leo Marsh.",
+         lambda st, m, ch: [(t["customer"], "checkout error 500" in t["subject"].lower(), t["priority"], t["assignee"])
+                            for t in new_tickets(st)] == [("c3", True, "P1", "Leo Marsh")], ("ticket:4483",), tags=("forms",)),
+    Task("shop-account", "shop", "Change my saved address to 9 Bay St, Buffalo NY 14203, set my phone number to 716-555-0199, "
+         "and turn off the offer emails.",
+         lambda st, m, ch: st["shop"]["saved_address"].startswith("9 Bay St") and "14203" in st["shop"]["saved_address"]
+         and st["shop"]["phone"] == "716-555-0199" and st["shop"]["email_updates"] is False, ("account:",), tags=("forms",)),
 ]
 
 BY_ID = {t.id: t for t in TASKS}
-assert len(TASKS) == 36 and len(BY_ID) == 36
+assert len(TASKS) == 44 and len(BY_ID) == 44
