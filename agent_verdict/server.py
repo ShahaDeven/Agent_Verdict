@@ -72,7 +72,8 @@ def _notify(run: dict) -> None:
 
 
 def create_app(store: Store | None = None, *, allow_spend: bool = False, max_usd: float = 0.10,
-               dry_run: bool = False, ledger_path: str | Path | None = None) -> FastAPI:
+               dry_run: bool = False, ledger_path: str | Path | None = None, replay: bool = False) -> FastAPI:
+    """replay=True: the runs are a recorded playback (agent-verdict demo --replay); the Live page says so."""
     store = store or Store()
     store.summary()  # warm the database pages once at startup, so the first page load isn't a cold disk read
     app = FastAPI(title="Agent Verdict", version="0.1")
@@ -99,6 +100,15 @@ def create_app(store: Store | None = None, *, allow_spend: bool = False, max_usd
         rows, total = store.queue(status=status, flag_=flag, benchmark=benchmark, q=q, limit=limit, offset=offset)
         return {"total": total, "items": rows}
 
+    @app.get("/api/results")
+    def results():
+        """The Results page's numbers: results/summary.json, built by scripts/build_results.py ($0)."""
+        p = REPO_ROOT / "results" / "summary.json"
+        if not p.exists():
+            raise HTTPException(404, "no results summary yet: run python scripts/build_results.py")
+        import json
+        return json.loads(p.read_text(encoding="utf-8"))
+
     @app.get("/api/featured")
     def featured():
         """The run the front page previews (a flagged "claimed done, but failed" run)."""
@@ -109,7 +119,7 @@ def create_app(store: Store | None = None, *, allow_spend: bool = False, max_usd
     def live(limit: int = Query(30, ge=1, le=200)):
         """Runs from your own agents (anything not from the benchmark), newest first; verdict is null
         while a run waits to be judged. The Live screen polls this."""
-        return {"items": store.recent(limit=limit), "judging_enabled": client is not None}
+        return {"items": store.recent(limit=limit), "judging_enabled": client is not None, "replay": replay}
 
     @app.get("/api/runs/{run_id}")
     def run(run_id: int):

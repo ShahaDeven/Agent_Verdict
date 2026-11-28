@@ -123,7 +123,7 @@ export const api = {
     get<{ total: number; items: QueueItem[] }>(`/api/queue?status=${status}&limit=${limit}`),
   run: (id: number) => get<Run>(`/api/runs/${id}`),
   featured: () => get<{ id: number | null; run: Run | null }>('/api/featured'),
-  live: () => get<{ items: LiveItem[]; judging_enabled: boolean }>('/api/live'),
+  live: () => get<{ items: LiveItem[]; judging_enabled: boolean; replay?: boolean }>('/api/live'),
   screenUrl: (id: number, state: number) => `/api/runs/${id}/screens/${state}`,
   review: async (id: number, success: boolean, agreesWithJudge: boolean, note?: string) => {
     const r = await fetch(`/api/runs/${id}/review`, {
@@ -135,3 +135,31 @@ export const api = {
     return r.json() as Promise<Review>
   },
 }
+
+// ---- Results page (results/summary.json, built by scripts/build_results.py)
+export interface Diff { diff: number; lo: number; hi: number; significant: boolean }
+export interface JudgeRow {
+  judge: string; precision: number; recall: number; f1: number; accuracy: number
+  f1_ci: [number, number] | null; accuracy_ci: [number, number] | null
+  cost_per_1000: number; self_hosted: boolean
+  ember_minus?: { precision: Diff; accuracy: Diff; f1: Diff }
+}
+export interface EscalationRow { rule: string; reviewed: number; accuracy_auto: number | null; accuracy_overall: number }
+export interface LiveAgent {
+  agent: string; runs: number; scored: number; agree: number; agent_succeeded: number; declined: number
+  false_claims: number; false_claims_caught: number; sent_to_person: number; cost_per_verdict: number | null
+}
+export interface ResultsSummary {
+  generated_at: string
+  total_spend_usd: number
+  fair: { runs: number; successes: number; judges: JudgeRow[] }
+  v2: { runs: number; precision: number; recall: number; accuracy: number; cost_per_1000: number
+        by_confidence: Record<string, { runs: number; accuracy: number | null }>; escalation: EscalationRow[] }
+  best_attempt: { tasks: number; attempts: number; judge: number; random: number; ceiling: number; best_agent: string
+                  agents: Record<string, number>; vs_best_agent: Diff; vs_random: Diff; share_of_gain: number | null
+                  judge_says_none: { tasks: number; right: number }
+                  by_benchmark: Record<string, { tasks: number; judge: number; best_agent: number; random: number; ceiling: number }> }
+  live: { agents: LiveAgent[] }
+}
+
+export const getResults = () => get<ResultsSummary>('/api/results')

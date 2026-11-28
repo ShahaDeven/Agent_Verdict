@@ -36,6 +36,7 @@ export function Header({ children }: { children?: ReactNode }) {
       <nav aria-label="Sections" className="flex flex-wrap gap-1">
         <NavLink href="#/review" label="Review queue" active={hash.startsWith('#/review')} />
         <NavLink href="#/live" label="Live" active={hash.startsWith('#/live')} />
+        <NavLink href="#/results" label="Results" active={hash.startsWith('#/results')} />
       </nav>
       <div className="ml-auto flex flex-wrap items-center gap-3">
         {children}
