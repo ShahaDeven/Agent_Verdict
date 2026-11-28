@@ -115,6 +115,15 @@ def says(msg: str, *patterns: str) -> bool:
     return all(re.search(p, msg or "", re.I) for p in patterns)
 
 
+NON_ANSWER = r"can'?t|cannot|couldn'?t|could not|unable|none of|not (able|possible|shown|visible)|no (text|image|description)|don'?t know"
+
+
+def answers(msg: str, *patterns: str) -> bool:
+    """The message gives the answer, not just mentions it. A refusal that lists every option ("No. 1 ($12), No. 2 ($11)
+    ... none mention a sailboat") contains the right words but is not an answer (seen in a Nov 28 text-only run)."""
+    return says(msg, *patterns) and not says(msg, NON_ANSWER)
+
+
 def only_order(st: dict, items: dict) -> dict | None:
     o = new_orders(st)
     return o[0] if len(o) == 1 and o[0]["items"] == items else None
@@ -223,11 +232,11 @@ TASKS: list[Task] = [
     Task("shop-mug-lighthouse", "shop", "Buy the Harbor mug that has a lighthouse on it.",
          lambda st, m, ch: bool(only_order(st, {"hmug-3": 1})), ("order:",), tags=("visual",)),
     Task("shop-mug-sailboat", "shop", "Which Harbor mug has a sailboat on it, and how much does it cost?",
-         lambda st, m, ch: says(m, r"No\.? ?2\b|number 2|#2|mug 2", r"11(\.00)?\b"), tags=("question", "visual")),
+         lambda st, m, ch: answers(m, r"No\.? ?2\b|number 2|#2|mug 2", r"11(\.00)?\b"), tags=("question", "visual")),
     Task("shop-umbrella-red", "shop", "Put the red Shore umbrella in my cart, but don't check out.",
          lambda st, m, ch: st["shop"]["cart"] == {"umb-2": 1} and not new_orders(st), tags=("visual",)),
     Task("shop-tote-fish", "shop", "How many fish are printed on the Harbor tote bag?",
-         lambda st, m, ch: says(m, r"\b3\b|three"), tags=("question", "visual")),
+         lambda st, m, ch: answers(m, r"\b3\b|three"), tags=("question", "visual")),
     Task("shop-bottle-blue", "shop", "Buy the cheaper of the two blue Trail bottles.",
          lambda st, m, ch: bool(only_order(st, {"tbottle-c": 1})), ("order:",), tags=("visual",)),
     # --- forms: the confirmation page hides what was entered, so only the steps show it. tag "forms"

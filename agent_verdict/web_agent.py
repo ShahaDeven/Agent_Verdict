@@ -116,9 +116,13 @@ def parse_action(raw: str) -> tuple[str, int, str, str]:
 
 
 def run_agent(client: EmberClient, page, goal: str, start_url: str, out_dir: Path, *, max_steps: int = 15,
-              effort: str = "minimal", run_key: str = "") -> AgentRun:
+              effort: str = "minimal", run_key: str = "", see_screen: bool = True) -> AgentRun:
     """Drive `page` (a Playwright page) toward `goal`. Screenshots go to out_dir. Raises BudgetExceeded
-    if a spend cap would be passed (nothing is sent)."""
+    if a spend cap would be passed (nothing is sent).
+
+    see_screen=False is a text-only agent (like AgentRewardBench's Llama 3.3 setup, and many cheaper
+    deployed agents): it gets the page text and elements but no screenshot. Screenshots are still taken
+    for the judge, which always sees them."""
     import base64
 
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -140,6 +144,9 @@ def run_agent(client: EmberClient, page, goal: str, start_url: str, out_dir: Pat
             {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{b64}"}},
             {"type": "text", "text": "Choose the next action as JSON."},
         ]
+        if not see_screen:  # text-only setting: same prompt, no picture of the page (and it is told so)
+            user = [user[0], {"type": "text", "text": "There is no screenshot in this setting: use the page text and the "
+                                                      "element list. Choose the next action as JSON."}]
         msgs = [{"role": "system", "content": SYSTEM}, {"role": "user", "content": user}]
         act = None
         for attempt in range(2):  # one retry if the answer can't be read; never act on the agent's behalf

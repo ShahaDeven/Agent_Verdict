@@ -142,6 +142,10 @@ def test_correct_solution_passes_with_no_side_effects(task):
     ("shop-mug-lighthouse", [("post", "/shop/cart/add", {"sku": "hmug-1", "qty": 1}), ("post", "/shop/checkout/shipping", {"choice": "saved"}),
                              ("post", "/shop/checkout/place", {})], "Ordered the lighthouse mug."),
     ("shop-mug-sailboat", [], "Harbor mug No. 3 has the sailboat; $12.50."),
+    # the text-only agent's real non-answer (Nov 28): lists every mug, so the right words appear, but it answers nothing
+    ("shop-mug-sailboat", [], "I checked all 4 Harbor mug search results: Harbor mug No. 1 ($12.00), No. 2 ($11.00), No. 3 ($12.50), "
+                              "and No. 4 ($10.50). None of the product page text mentions a sailboat, so I can't tell which one it is."),
+    ("shop-tote-fish", [], "I cannot determine the number of fish; the page has no description. There could be 3 or more."),
     ("shop-umbrella-red", [("post", "/shop/cart/add", {"sku": "umb-1", "qty": 1})], "Added the red umbrella."),
     ("shop-tote-fish", [], "There are 4 fish."),
     # the cheapest bottle overall is green, not blue

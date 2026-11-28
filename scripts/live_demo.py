@@ -44,6 +44,8 @@ def main() -> int:
     ap.add_argument("--max-usd", type=float, default=0.10, help="spend cap for this script run (agent + judge)")
     ap.add_argument("--max-steps", type=int, default=15)
     ap.add_argument("--effort", default="minimal", help="agent reasoning effort (the judge always uses minimal)")
+    ap.add_argument("--text-only", action="store_true",
+                    help="text-only agent: no screenshots for the agent (the judge still sees them)")
     ap.add_argument("--sites", default="http://127.0.0.1:5100")
     ap.add_argument("--headed", action="store_true", help="show the browser window")
     ap.add_argument("--slow-mo", type=int, default=0, help="ms pause between browser actions (for recording)")
@@ -77,20 +79,22 @@ def main() -> int:
           f"spend cap ${args.max_usd:.2f} (ledger total so far ${client.ledger.prior_spent:.4f} of ${client.ledger.cap_usd:.2f}); "
           f"runs go to {store.path}")
 
+    agent_label = f"Ember web agent{', text only' if args.text_only else ''} ({args.effort})"
+    print(f"Agent: {agent_label}")
     rows, stopped = [], None
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=not args.headed, slow_mo=args.slow_mo)
         try:
             for attempt in range(1, args.attempts + 1):
                 for task in tasks:
-                    key = f"live/{task.id}/a{attempt}/{stamp}"
+                    key = f"live/{task.id}/a{attempt}{'-text' if args.text_only else ''}/{stamp}"
                     requests.post(f"{args.sites}/_reset", timeout=5).raise_for_status()
                     ctx = browser.new_context(viewport={"width": 1280, "height": 800})
                     page = ctx.new_page()
                     t0 = time.time()
                     try:
                         run = run_agent(client, page, task.goal, args.sites + task.start, live_dir / task.id / f"a{attempt}",
-                                        max_steps=max_steps, effort=args.effort, run_key=key)
+                                        max_steps=max_steps, effort=args.effort, run_key=key, see_screen=not args.text_only)
                     finally:
                         ctx.close()
                     state = requests.get(f"{args.sites}/_state", timeout=5).json()
@@ -105,7 +109,7 @@ def main() -> int:
                     # Doing something else instead, or claiming it's done, is a clear failure.
                     declined = result == "declined"
                     truth = None if declined else result == "success"
-                    run_id = store.add_run(key, trace, source="live", screens=screens, agent=f"Ember web agent ({args.effort})",
+                    run_id = store.add_run(key, trace, source="live", screens=screens, agent=agent_label,
                                            task=task.id, reference={"success": truth, "side_effect": bool(se), "looping": None})
                     (live_dir / task.id / f"a{attempt}" / "run.json").write_text(json.dumps(
                         {**run.trace_json(), "task": task.id, "feasible": task.feasible, "final_message": run.final_message,
@@ -144,7 +148,8 @@ def report(rows, args, client, stopped, stamp) -> None:
     caught = [r for r in scored if not r["truth"] and r["verdict"].get("claimed_success")]
     caught_ok = sum(1 for r in caught if not r["verdict"]["success"])
     declined = [r for r in judged if r["declined"]]
-    lines = [f"# Live demo {stamp}{' (DRY RUN: mock Ember)' if args.dry_run else ''}", "",
+    lines = [f"# Live demo {stamp}{' (DRY RUN: mock Ember)' if args.dry_run else ''}"
+             f"{' (text-only agent: no screenshots)' if args.text_only else ''}", "",
              f"{len(rows)} runs; per the sites' own records the agent succeeded on {sum(1 for r in rows if r['truth'])}, "
              f"failed on {sum(1 for r in rows if r['truth'] is False)}, and honestly declined {len(declined)} impossible task(s).",
              f"The judge agreed with the true outcome on {agree} of {len(scored)} runs." if scored else "No scored verdicts.",
