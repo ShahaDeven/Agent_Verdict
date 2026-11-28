@@ -54,10 +54,11 @@ cd ..
 ### See it work: one command, no API key needed
 
 ```powershell
-agent-verdict demo
+agent-verdict demo --replay   # recorded runs, no API key, $0
+agent-verdict demo            # live agent if you have a key (about $0.01); without a key it replays
 ```
 
-This starts the app and opens the home page in your browser.
+Either command starts the app and opens the home page in your browser.
 
 - **Without an API key,** you get a **replay**: 59 real runs of our Ember agent on the demo sites, with all 496 screenshots and Muse Ember's real verdicts, shipped in `demo_replay/`. Most are there from the start. Eight more arrive one by one on the **Live** page, each shown as judging and then given its verdict, including two false "done" claims the judge catches. Browse the review queue, open any run and make the call yourself. No key, no cost.
 - **With a key in `.env`,** the Ember agent does three new tasks live on the demo websites, for about $0.01.
