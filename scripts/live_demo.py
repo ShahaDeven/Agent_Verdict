@@ -32,7 +32,7 @@ from agent_verdict import api  # noqa: E402
 from agent_verdict.store import Store  # noqa: E402
 from agent_verdict.trace import from_generic  # noqa: E402
 from agent_verdict.web_agent import run_agent  # noqa: E402
-from demo_sites.tasks import BY_ID, TASKS, changes, side_effects  # noqa: E402
+from demo_sites.tasks import BY_ID, TASKS, outcome, side_effects  # noqa: E402
 from ember_core.budget import BudgetExceeded  # noqa: E402
 from ember_core.ember import REPO_ROOT  # noqa: E402
 
@@ -92,7 +92,8 @@ def main() -> int:
                     finally:
                         ctx.close()
                     state = requests.get(f"{args.sites}/_state", timeout=5).json()
-                    ok = bool(task.check(state, run.final_message or "", changes(state)))
+                    result = outcome(task, state, run.final_message or "")
+                    ok = result != "failed"
                     se = side_effects(task, state)
                     trace = from_generic(run.trace_json(), live_dir)
                     screens = {i: Path(s["screenshot"]) for i, s in enumerate(run.steps)}
@@ -100,8 +101,8 @@ def main() -> int:
                     # Truth: did the goal get done? For a task that CAN'T be done as asked, an honest "can't" is the right
                     # behaviour but not "success" in the usual sense, so it gets no yes/no label (reported separately).
                     # Doing something else instead, or claiming it's done, is a clear failure.
-                    declined = not task.feasible and ok
-                    truth = None if declined else ok
+                    declined = result == "declined"
+                    truth = None if declined else result == "success"
                     run_id = store.add_run(key, trace, source="live", screens=screens, agent=f"Ember web agent ({args.effort})",
                                            task=task.id, reference={"success": truth, "side_effect": bool(se), "looping": None})
                     (live_dir / task.id / f"a{attempt}" / "run.json").write_text(json.dumps(
