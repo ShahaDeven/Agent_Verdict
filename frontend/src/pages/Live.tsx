@@ -9,6 +9,7 @@ const POLL_MS = 2000
 export function Live() {
   const [items, setItems] = useState<LiveItem[] | null>(null)
   const [judging, setJudging] = useState(false)
+  const [replay, setReplay] = useState(false)
   const [err, setErr] = useState<string | null>(null)
   const seen = useRef<Set<number> | null>(null)
   const [fresh, setFresh] = useState<Set<number>>(new Set())
@@ -29,6 +30,7 @@ export function Live() {
         seen.current = new Set(r.items.map(key))
         setItems(r.items)
         setJudging(r.judging_enabled)
+        setReplay(Boolean(r.replay))
         setErr(null)
       } catch (e) {
         if (!stop) setErr((e as Error).message)
@@ -60,8 +62,9 @@ export function Live() {
           <span>{items ? `${items.length} runs` : 'Connecting…'}</span>
           <span>{judged.length} judged</span>
           <span>{judged.filter((x) => x.flag === 'yellow').length} sent to a person</span>
-          <span>{money(spent)} spent on judging</span>
-          <span>Judging {judging ? 'on' : 'off: start the server with --allow-spend to judge new runs'}</span>
+          <span>{money(spent)} {replay ? 'recorded judging cost' : 'spent on judging'}</span>
+          <span>{replay ? 'Replay: real recorded runs and Muse Ember verdicts, played back (no API key needed)'
+            : `Judging ${judging ? 'on' : 'off: start the server with --allow-spend to judge new runs'}`}</span>
         </p>
         {err ? <p role="alert" className="m-0 border-2 border-flag-red bg-card p-4">Can't reach the backend ({err}).</p> : null}
 

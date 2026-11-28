@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
-import { api, type Run, type Summary } from '../api'
+import { api, getResults, type ResultsSummary, type Run, type Summary } from '../api'
 import { Header } from '../components/Header'
 import { agentSaid, FLAG, headline, plainQuote, proofState } from '../verdict'
 
@@ -7,17 +7,30 @@ const pct = (x: number) => `${Math.round(x * 100)}%`
 
 export function Front() {
   const [s, setS] = useState<Summary | null>(null)
+  const [res, setRes] = useState<ResultsSummary | null>(null)
   const [featured, setFeatured] = useState<Run | null>(null)
   const [err, setErr] = useState<string | null>(null)
   const how = useRef<HTMLElement>(null)
   useEffect(() => {
     api.summary().then(setS, (e: Error) => setErr(e.message))
+    getResults().then(setRes, () => undefined)  // the benchmark headline (results/summary.json, ships with the repo)
     api.featured().then((f) => setFeatured(f.run), () => undefined)
   }, [])
 
+  // The headline numbers are the held-out benchmark's, whatever this database holds (a replay, live runs...).
+  const rule = res?.v2.escalation.find((e) => e.rule.includes('rule'))
   const yellow = s?.flags.yellow ?? 0
-  const stats = s && s.judged > 0
+  const stats = res && rule
     ? [
+        { big: rule.accuracy_auto != null ? pct(rule.accuracy_auto) : '–',
+          small: `accuracy on the ${Math.round((1 - rule.reviewed) * res.v2.runs).toLocaleString()} runs it decided alone`,
+          note: 'Its calls checked against expert labels' },
+        { big: pct(rule.reviewed), small: `sent to a person (${Math.round(rule.reviewed * res.v2.runs)} runs)`,
+          note: 'Everything below high confidence' },
+        { big: `$${res.v2.cost_per_1000.toFixed(2)}`, small: 'per 1,000 runs judged',
+          note: 'GPT-4o cost about $13 on the same runs' },
+      ]
+    : s && s.judged > 0 ? [
         { big: s.auto_accuracy_vs_experts != null ? pct(s.auto_accuracy_vs_experts) : '–',
           small: `accuracy on the ${s.auto_decided.toLocaleString()} runs it decided alone`,
           note: 'Its calls checked against expert labels' },
@@ -84,7 +97,7 @@ export function Front() {
               ))}
             </section>
             <p className="m-0 max-w-[1000px] text-[13px] leading-relaxed text-ink-3">
-              Measured on the {s!.judged.toLocaleString()} test-split runs of AgentRewardBench, which were never used for
+              Measured on the {(res?.v2.runs ?? s?.judged ?? 0).toLocaleString()} test-split runs of AgentRewardBench, which were never used for
               tuning. In the benchmark's own setup (same runs, same prompt), Muse Ember has the highest precision of six
               judges: 80%, against 65–70% for GPT-4o, Claude 3.7 Sonnet, GPT-4o-mini, Qwen2.5-VL and Llama 3.3. Each of those
               gaps holds up in a paired bootstrap test, at 22× less than GPT-4o.

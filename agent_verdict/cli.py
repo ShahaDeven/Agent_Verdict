@@ -126,6 +126,81 @@ def cmd_demo_sites(args) -> int:
     return 0
 
 
+DEMO_TASKS = "shop-aa,shop-lamp,bistro-fri-730"
+
+
+def cmd_demo(args) -> int:
+    """Everything in one terminal: the demo sites, the app, the browser on the home page, and either a few live
+    agent runs (needs MODEL_API_KEY) or a replay of recorded runs (no key, $0). Ctrl+C stops it all."""
+    import subprocess
+    import threading
+    import time
+    import webbrowser
+
+    import uvicorn
+
+    from demo_sites.app import app as sites_app
+    from ember_core.ember import REPO_ROOT
+
+    from ember_core.ember import load_api_key
+
+    from .server import create_app
+    from .store import Store
+
+    if not (args.replay or args.dry_run) and not load_api_key():
+        print("No MODEL_API_KEY found, so this is a replay of recorded runs: real agent runs and real Muse Ember "
+              "verdicts, played back with no key and no cost. Put a key in .env to run the agent live.", flush=True)
+        args.replay = True
+    # replay and mock runs get their own databases, so they never mix with real data
+    if args.replay:
+        db = REPO_ROOT / "data" / "app" / "replay.db"
+        for f in (db, db.with_name("replay.db-wal"), db.with_name("replay.db-shm")):
+            f.unlink(missing_ok=True)  # a fresh replay every time
+    else:
+        db = REPO_ROOT / "data" / "app" / "dry_run.db" if args.dry_run else None
+    store = Store(db) if db else Store()
+
+    def start(name, app, port):
+        print(f"Starting {name} on port {port}...", flush=True)
+        server = uvicorn.Server(uvicorn.Config(app, host="127.0.0.1", port=port, log_level="warning"))
+        threading.Thread(target=server.run, daemon=True).start()
+        deadline = time.monotonic() + 60  # a cold first start can take a while on a slow disk
+        while time.monotonic() < deadline:
+            if server.started:
+                return
+            time.sleep(0.2)
+        raise SystemExit(f"{name} didn't start on port {port} within 60 s: is something else using that port? "
+                         "(stop other agent-verdict windows, or pass --port / --sites-port)")
+
+    start("the demo sites", sites_app, args.sites_port)
+    start("the app", create_app(store, replay=args.replay), args.port)
+    url = f"http://127.0.0.1:{args.port}/"
+    print(f"Demo sites: http://127.0.0.1:{args.sites_port}   App: {url}   (Live page: {url}#/live)", flush=True)
+
+    if args.replay:
+        from .replay import play
+        threading.Thread(target=play, args=(store,), kwargs={"log": lambda m: print(m, flush=True)}, daemon=True).start()
+        time.sleep(1.5)  # the up-front runs are in before the browser opens
+    if not args.no_browser:
+        webbrowser.open(url)  # the home page: the story first
+
+    if not args.replay and args.tasks.lower() != "none":
+        cmd = [sys.executable, str(REPO_ROOT / "scripts" / "live_demo.py"), "--tasks", args.tasks,
+               "--attempts", str(args.attempts), "--max-usd", str(args.max_usd), "--sites", f"http://127.0.0.1:{args.sites_port}"]
+        cmd += ["--text-only"] * args.text_only + ["--headed"] * args.headed + ["--dry-run"] * args.dry_run
+        if db:
+            cmd += ["--db", str(db)]
+        print(f"\nRunning the agent ({'mock Ember, $0' if args.dry_run else f'capped at ${args.max_usd:.2f}'})...\n", flush=True)
+        subprocess.run(cmd, check=False)
+    print(f"\nRunning: {url} (home), {url}#/review, {url}#/live and {url}#/results. Press Ctrl+C to stop.", flush=True)
+    try:
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        print("Stopped.")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(prog="agent-verdict", description="Muse Ember judge for AI agent runs")
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -161,6 +236,21 @@ def main(argv: list[str] | None = None) -> int:
     d.add_argument("--host", default="127.0.0.1")
     d.add_argument("--port", type=int, default=5100)
     d.set_defaults(fn=cmd_demo_sites)
+
+    m = sub.add_parser("demo", help="one command: demo sites + app + browser + a few live agent runs")
+    m.add_argument("--tasks", default=DEMO_TASKS,
+                   help=f"task ids, or all|standard|hard|visual|forms, or none to just browse (default {DEMO_TASKS})")
+    m.add_argument("--attempts", type=int, default=1)
+    m.add_argument("--max-usd", type=float, default=0.05, help="spend cap for the agent runs (default $0.05)")
+    m.add_argument("--text-only", action="store_true", help="the agent setting without screenshots")
+    m.add_argument("--headed", action="store_true", help="show the agent's browser")
+    m.add_argument("--dry-run", action="store_true", help="mock Ember, $0 (uses a separate database)")
+    m.add_argument("--replay", action="store_true",
+                   help="play back recorded real runs and verdicts: no API key, $0 (the default when there is no key)")
+    m.add_argument("--no-browser", action="store_true")
+    m.add_argument("--port", type=int, default=8000)
+    m.add_argument("--sites-port", type=int, default=5100)
+    m.set_defaults(fn=cmd_demo)
 
     args = ap.parse_args(argv)
     return args.fn(args)

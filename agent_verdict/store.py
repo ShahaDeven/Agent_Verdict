@@ -296,9 +296,10 @@ class Store:
         with self.conn() as c:
             r = c.execute(f"""SELECT r.id FROM runs r JOIN verdicts v ON v.run_id = r.id AND {LATEST}
                               WHERE v.success = 0 AND v.claimed_success = 1 AND r.final_message IS NOT NULL
-                                AND v.failure_type IN ('false_completion', 'wrong_answer')
+                                AND v.failure_type IN ('false_completion', 'wrong_answer', 'wrong_target')
                                 AND (r.ref_success IS NULL OR r.ref_success = 0)
-                              ORDER BY v.needs_review DESC, v.failure_type = 'false_completion' DESC,
+                              ORDER BY v.needs_review DESC, r.ref_success IS NOT NULL DESC,
+                                       v.failure_type = 'false_completion' DESC,
                                        v.evidence_screenshot = 'FINAL' DESC, LENGTH(r.goal), r.id
                               LIMIT 1""").fetchone()
         return r["id"] if r else None
