@@ -116,6 +116,16 @@ def cmd_serve(args) -> int:
     return 0
 
 
+def cmd_demo_sites(args) -> int:
+    import uvicorn
+
+    from demo_sites.app import app
+    print(f"Demo sites on http://{args.host}:{args.port}: /shop (Lakeshore Supply), /bistro (Harbor Bistro), "
+          f"/desk (Northpoint Help Desk). Data resets on restart or POST /_reset.")
+    uvicorn.run(app, host=args.host, port=args.port, log_level="warning")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(prog="agent-verdict", description="Muse Ember judge for AI agent runs")
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -146,6 +156,11 @@ def main(argv: list[str] | None = None) -> int:
     v.add_argument("--dry-run", action="store_true", help="judge endpoint uses mock Ember ($0)")
     v.add_argument("--db")
     v.set_defaults(fn=cmd_serve)
+
+    d = sub.add_parser("demo-sites", help="run the local demo sites the live agent works on")
+    d.add_argument("--host", default="127.0.0.1")
+    d.add_argument("--port", type=int, default=5100)
+    d.set_defaults(fn=cmd_demo_sites)
 
     args = ap.parse_args(argv)
     return args.fn(args)

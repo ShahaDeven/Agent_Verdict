@@ -108,6 +108,9 @@ export function siteName(run: { benchmark?: string | null; steps?: Run['steps'];
     webarena: 'WebArena', visualwebarena: 'VisualWebArena', workarena: 'WorkArena', assistantbench: 'AssistantBench',
   }
   if (run.benchmark && names[run.benchmark]) return names[run.benchmark]
+  const url = run.steps?.[0]?.url ?? ''
+  const demo: [string, string][] = [['/shop/', 'Lakeshore Supply'], ['/bistro/', 'Harbor Bistro'], ['/desk/', 'Northpoint Help Desk']]
+  for (const [path, name] of demo) if (url.includes(path)) return name
   try {
     return new URL(run.steps?.[0]?.url ?? '').host || run.source
   } catch {

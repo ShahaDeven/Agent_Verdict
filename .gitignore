@@ -12,3 +12,5 @@ results/*/report.json
 # local review-queue database and imported screenshots
 data/app/
 *.egg-info/
+# live demo runs (screenshots of our own demo sites)
+data/live/

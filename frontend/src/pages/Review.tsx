@@ -306,7 +306,7 @@ function Recorded({ run, judgeOk, after, onNext }: {
       </p>
       {run.ref_success != null ? (
         <p className="m-0 text-[15px] text-ink-2">
-          The benchmark's experts said {run.ref_success ? 'it succeeded' : 'it failed'}
+          {run.source === 'live' ? "The site's own records say" : "The benchmark's experts said"} {run.ref_success ? 'it succeeded' : 'it failed'}
           {Boolean(run.ref_success) === Boolean(d.success) ? ', the same as you.' : ', unlike you.'}
         </p>
       ) : null}
